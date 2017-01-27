@@ -10,7 +10,7 @@ Compatible with [AnyCable](http://anycable.io) (for production usage).
 
 ## Examples
 
-- [Sinatra Lite Cable Chat](tree/master/examples/sinatra)
+- [Sinatra Lite Cable Chat](https://github.com/palkan/litecable/tree/master/examples/sinatra)
 
 ## Installation
 
@@ -30,7 +30,70 @@ Or install it yourself as:
 
 ## Usage
 
+Please, checkout [Action Cable guides](http://guides.rubyonrails.org/action_cable_overview.html) for general information. Lite Cable aims to be compatible with Action Cable as much as possible without the loss of simplicity and _ligthness_.
+
+You can use Action Cable javascript client without any change (precompiled version can be found [here](https://github.com/palkan/litecable/tree/master/examples/sinatra/assets/cable.js)).
+
+Here are the differences:
+
+- Use `LiteCable::Connection::Base` as a base class for your connection (instead of `ActionCable::Connection::Base`)
+
+- Use `LiteCable::Channel::Base` as a base class for your channels (instead of `ActionCable::Channel::Base`)
+
+- Use `LiteCable.broadcast` to broadcast messages (instead of `ActionCable.server.broadcast`)
+
+- Explicitly specify channels names:
+
+```ruby
+class MyChannel < LiteCable::Channel::Base
+  # Use this id in your client to create subscriptions
+  identifier :chat
+end
+```
+
+```js
+App.cable.subscriptions.create('chat', ...)
+```
+
+### Using built-in server (middleware)
+
+Lite Cable comes with a simple Rack middleware for development/testing usage.
+To use Lite Cable server:
+
+- Add `gem "websocket"` to your Gemfile
+
+- Add `require "lite_cable/server"`
+
+- Add `LiteCable::Server::Middleware` to your Rack stack, for example:
+
+```ruby
+Rack::Builder.new do
+  map '/cable' do
+    # You have to specify your app's connection class
+    use LiteCable::Server::Middleware, connection_class: App::Connection
+    run proc { |_| [200, { 'Content-Type' => 'text/plain' }, ['OK']] }
+  end
+```
+
+### Using with AnyCable
+
 TBD
+
+### Configuration
+
+Lite Cable uses [anyway_config](https://github.com/palkan/anyway_config) for configuration.
+
+See [config](https://github.com/palkan/litecable/blob/master/lib/lite_cable/config.rb) for available options.
+
+### Unsupported features
+
+- Channel callbacks (`after_subscribe`, etc)
+
+- Stream callbacks (`stream_from "xyz" { |msg| ... }`)
+
+- Periodical timers
+
+- Remote connections.
 
 ## Contributing
 
