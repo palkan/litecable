@@ -78,13 +78,17 @@ module LiteCable
           end
         end
 
+        attr_reader :id
+
         # Register the channel by its unique identifier
         # (in order to resolve the channel's class for connections)
         def identifier(id)
-          Registry.add(id, self)
+          Registry.add(id.to_s, self)
+          @id = id
         end
       end
 
+      include Logging
       prepend Streams
 
       attr_reader :connection, :identifier, :params
@@ -124,7 +128,7 @@ module LiteCable
         action = extract_action(data)
 
         raise UnproccessableActionError unless processable_action?(action)
-
+        log(:debug) { log_fmt("Perform action #{action}(#{data})") }
         dispatch_action(action, data)
       end
 
@@ -150,6 +154,11 @@ module LiteCable
             connection.send(identifier)
           end
         end
+      end
+
+      # Add prefix to channel log messages
+      def log_fmt(msg)
+        "[connection:#{connection.identifier}] [channel:#{self.class.id}] #{msg}"
       end
     end
   end

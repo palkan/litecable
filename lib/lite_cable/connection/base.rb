@@ -40,12 +40,13 @@ module LiteCable
       # rubocop:enable Metrics/LineLength
       include Authorization
       prepend Identification
+      include Logging
 
       attr_reader :subscriptions, :streams, :coder
 
-      def initialize(socket, coder: Coders::JSON)
+      def initialize(socket, coder: nil)
         @socket = socket
-        @coder = coder
+        @coder = coder || LiteCable.config.coder
 
         @subscriptions = Subscriptions.new(self)
         @streams = Streams.new(socket)
@@ -54,7 +55,9 @@ module LiteCable
       def handle_connect
         connect if respond_to?(:connect)
         send_welcome_message
+        log(:debug) { log_fmt("Opened") }
       rescue UnauthorizedError
+        log(:debug) { log_fmt("Authorization failed") }
         close
       end
 
@@ -63,12 +66,14 @@ module LiteCable
         subscriptions.remove_all
 
         disconnect if respond_to?(:disconnect)
+        log(:debug) { log_fmt("Closed") }
       end
 
       def handle_command(websocket_message)
         command = decode(websocket_message)
         subscriptions.execute_command command
-      rescue Subscriptions::Error, Channel::Error, Channel::Registry::Error
+      rescue Subscriptions::Error, Channel::Error, Channel::Registry::Error => e
+        log(:error, log_fmt("Connection command failed: #{e}"))
         close
       end
 
@@ -116,6 +121,10 @@ module LiteCable
 
       def decode(websocket_message)
         coder.decode websocket_message
+      end
+
+      def log_fmt(msg)
+        "[connection:#{identifier}] #{msg}"
       end
     end
   end

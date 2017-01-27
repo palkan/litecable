@@ -8,6 +8,8 @@ module LiteCable
       class UnknownCommandError < Error; end
       class ChannelNotFoundError < Error; end
 
+      include Logging
+
       def initialize(connection)
         @connection = connection
         @subscriptions = {}
@@ -34,6 +36,7 @@ module LiteCable
         channel = find!(identifier)
         subscriptions.delete(identifier)
         channel.handle_unsubscribe
+        log(:debug) { log_fmt("Unsubscribed from channel #{channel.class.id}") }
         transmit_subscription_cancel(channel.identifier)
       end
 
@@ -73,6 +76,7 @@ module LiteCable
 
       def subscribe_channel(channel)
         channel.handle_subscribe
+        log(:debug) { log_fmt("Subscribed to channel #{channel.class.id}") }
         transmit_subscription_confirmation(channel.identifier)
         channel
       rescue Channel::RejectedError
@@ -94,6 +98,10 @@ module LiteCable
       def transmit_subscription_cancel(identifier)
         connection.transmit identifier: identifier,
                             type: LiteCable::INTERNAL[:message_types][:cancel]
+      end
+
+      def log_fmt(msg)
+        "[connection:#{connection.identifier}] #{msg}"
       end
     end
   end

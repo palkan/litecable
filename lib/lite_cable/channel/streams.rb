@@ -36,16 +36,19 @@ module LiteCable
 
       # Start streaming from the named broadcasting pubsub queue.
       def stream_from(broadcasting)
+        log(:debug) { log_fmt("Stream from #{broadcasting}") }
         connection.streams.add(identifier, broadcasting)
       end
 
       # Stop streaming from the named broadcasting pubsub queue.
       def stop_stream(broadcasting)
+        log(:debug) { log_fmt("Stop stream from #{broadcasting}") }
         connection.streams.remove(identifier, broadcasting)
       end
 
       # Unsubscribes all streams associated with this channel from the pubsub queue.
       def stop_all_streams
+        log(:debug) { log_fmt("Stop all streams") }
         connection.streams.remove_all(identifier)
       end
     end
