@@ -1,0 +1,15 @@
+doctype html
+html
+  head
+    title LiteCable Sinatra Demo
+    meta name="viewport" content="width=device-width"
+    meta charset="UTF-8"
+    link rel="stylesheet" href="/reset.css"
+    link rel="stylesheet" href="/app.css"
+    script type="text/javascript" src="/cable.js"
+  body
+    .header
+      h1.title
+        a href='/' LiteCable
+    .container.main
+      == yield      

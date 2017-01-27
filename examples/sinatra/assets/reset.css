@@ -1,0 +1,223 @@
+/* Reset
+----------------------------------------------------------------------------- */
+
+/* stylelint-disable */
+
+html, body,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+address, code, img,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label,
+table, th, td,
+article, aside, nav, section, figure, figcaption, footer, header,
+audio, video {
+  margin: 0;
+  padding: 0;
+}
+blockquote, img, fieldset, form {
+  border: 0;
+}
+a, strong, em, b, i, small, sub, sup, img, label, th, td, audio, video {
+  vertical-align: baseline;
+}
+applet, object, iframe,
+abbr, acronym, big, cite,
+del, dfn, ins, kbd, q, s, samp,
+strike, tt, var, u, center, legend,
+caption, tbody, tfoot, thead, tr,
+canvas, details, embed,
+menu, output, ruby, summary,
+time, mark {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+  font: inherit;
+  font-size: 100%;
+}
+ul, ol {
+  list-style: none;
+}
+
+/* Border-box FTW
+https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+html {
+  overflow-y: scroll;
+  box-sizing: border-box;
+  text-size-adjust: 100%;
+}
+a {
+  background-color: transparent; /* Remove the gray background color from active links in IE 10. */
+  -webkit-text-decoration-skip: none;
+
+  &:hover,
+  &:active {
+    outline: 0;
+  }
+}
+img {
+  vertical-align: middle;
+}
+strong, b {
+  font-weight: bold;
+}
+em, i {
+  font-style: italic;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+}
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+th {
+  font-weight: bold;
+}
+td {
+  vertical-align: top;
+}
+input,
+select,
+textarea,
+button {
+  margin: 0;
+  vertical-align: middle;
+  font-size: 100%;
+  font-family: inherit;
+}
+
+/**
+ * 1. Add the correct box sizing in IE 10-.
+ * 2. Remove the padding in IE 10-.
+ */
+[type="checkbox"],
+[type="radio"] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+
+/**
+ * Show the overflow in IE.
+ * 1. Show the overflow in Edge.
+ * 2. Show the overflow in Edge, Firefox, and IE.
+ */
+button,
+input, /* 1 */
+select { /* 2 */
+  overflow: visible;
+}
+
+/**
+ * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * All other form control elements do not inherit `text-transform` values.
+ * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
+ * Correct `select` style inheritance in Firefox.
+ */
+button,
+select {
+  text-transform: none;
+}
+
+/**
+ * 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`
+ *    controls in Android 4.
+ * 2. Correct inability to style clickable `input` types in iOS.
+ * 3. Improve usability and consistency of cursor style between image-type
+ *    `input` and others.
+ */
+button,
+html [type="button"], /* 1 */
+[type="reset"],
+[type="submit"] {
+  cursor: pointer; /* 3 */
+  -webkit-appearance: button; /* 2 */
+}
+
+/**
+ * Remove the inner border and padding in Firefox.
+ */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+/**
+ * 1. Remove the default vertical scrollbar in IE.
+ */
+textarea {
+  overflow: auto; /* 1 */
+  resize: vertical;
+}
+svg:not(:root) {
+  overflow: hidden; /* Correct overflow not hidden in IE. */
+}
+
+/**
+ * Correct the odd appearance of search inputs in Chrome and Safari.
+ */
+[type="search"] {
+  -webkit-appearance: textfield;
+}
+
+/**
+ * Remove the inner padding and cancel buttons in Chrome on OS X and
+ * Safari on OS X.
+ */
+[type="search"]::-webkit-search-cancel-button,
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+/* stylelint-enable */
+
+[role="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+    -webkit-box-sizing: content-box;
+       -moz-box-sizing: content-box;
+            box-sizing: content-box;
+}
+
+/* Reset `button` and button-style `input` default styles */
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+    background: none;
+    border: 0;
+    color: inherit;
+    /* cursor: default; */
+    font: inherit;
+    line-height: normal;
+    overflow: visible;
+    padding: 0;
+    -webkit-appearance: button; /* for input */
+    -webkit-user-select: none; /* for button */
+       -moz-user-select: none;
+        -ms-user-select: none;
+}
+input::-moz-focus-inner,
+button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+/* Make `a` like a button */
+[role="button"] {
+    color: inherit;
+    cursor: default;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    white-space: pre;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+}

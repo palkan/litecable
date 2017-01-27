@@ -4,9 +4,13 @@
 
 Lightweight ActionCable implementation.
 
-Contains application logic (channels, streams, broadcasting) and also (optional) Rack hijack based server (suitable only for development and test).
+Contains application logic (channels, streams, broadcasting) and also (optional) Rack hijack based server (suitable only for development and test due to its simplicity).
 
 Compatible with [AnyCable](http://anycable.io) (for production usage).
+
+## Examples
+
+- [Sinatra Lite Cable Chat](tree/master/examples/sinatra)
 
 ## Installation
 

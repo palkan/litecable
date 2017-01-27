@@ -1,0 +1,13 @@
+source 'https://rubygems.org'
+
+gem 'sinatra'
+gem 'sinatra-contrib'
+gem 'slim'
+
+gem 'puma'
+
+gem 'pry-byebug'
+
+# litecable deps
+gem "anyway_config",  "~>0.5.0"
+gem "websocket"

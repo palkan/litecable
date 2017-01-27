@@ -1,0 +1,169 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  min-width: 300px;
+}
+
+body {
+  background: #fff;
+  color: #363636;
+  font: 18px/30px "Arial", sans-serif;
+}
+
+p, div, span, a, ul, li {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: #ff5e5e;
+
+  &:visited,
+  &:active {
+    color: #ff5e5e;
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+h1 {
+  font-size: 70px;
+  line-height: 90px;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 40px;
+  line-height: 50px;
+  letter-spacing: 1.5px;
+  margin: 20px 0;
+}
+
+.main {
+  height: 100%;
+  width: 100%;
+  padding: 0 20%;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+input[type="text"] {
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  display: block;
+  margin: 0;
+  font-size: 18px;
+  appearance: none;
+  box-shadow: none;
+  border-radius: none;
+}
+
+button:focus, input[type="text"]:focus {
+  outline: none;
+}
+
+.btn {
+  cursor: pointer;
+  height: 40px;
+  text-decoration: none;
+  padding: 0 20px;
+  text-align: center;
+  background: #ff5e5e;
+  transition: opacity 200ms;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  letter-spacing: 1.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  margin-top: 30px;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+.message-form {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border-top: 1px #e3e3e3 solid;
+  z-index: 10;
+  padding: 20px 20% 20px 20%;
+  background: white;
+  opacity: 0.9;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 160px;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+}
+
+.message.me {
+  align-self: flex-end;
+}
+
+.messages .message .author {
+  color: #ff5e5e;
+}
+
+.messages .message.me .author {
+  align-self: flex-end;
+  color: #7ed321;
+}
+
+.messages .message.system .author {
+  color: #9e9e9e;
+}
+
+@media (max-width: 800px) and (min-width: 601px) {
+  body {
+    font-size: 3vw;
+    line-height: 5vw;
+  }
+
+  h1 {
+    font-size: 14vw;
+    line-height: 18vw;
+  }
+
+  h2 {
+    font-size: 5vw;
+    line-height: 7vw;
+  }
+}
+
+
+@media (max-width: 600px) {
+  body {
+    font-size: 4vw;
+    line-height: 6vw;
+  }
+
+  h1 {
+    font-size: 14vw;
+    line-height: 18vw;
+  }
+
+  h2 {
+    font-size: 10vw;
+    line-height: 12vw;
+  }
+}
