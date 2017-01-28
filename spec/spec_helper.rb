@@ -19,6 +19,8 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
+  config.include AsyncHelpers, async: true
+
   config.example_status_persistence_file_path = "tmp/rspec_examples.txt"
   config.filter_run :focus
   config.run_all_when_everything_filtered = true

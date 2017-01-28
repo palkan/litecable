@@ -11,6 +11,7 @@ module LiteCable
         attr_reader :version, :active
 
         def initialize(env, socket, version)
+          log(:debug, "WebSocket version #{version}")
           @env = env
           @socket = socket
           @version = version
@@ -102,10 +103,16 @@ module LiteCable
 
         def close!
           if @socket.respond_to?(:closed?)
-            @socket.close unless @socket.closed?
+            close_socket unless @socket.closed?
           else
-            @socket.close
+            close_socket
           end
+        end
+
+        def close_socket
+          frame = WebSocket::Frame::Outgoing::Server.new(version: version, type: :close, code: 1000)
+          @socket.write(frame.to_s) if frame.supported?
+          @socket.close
         end
 
         def keepalive
