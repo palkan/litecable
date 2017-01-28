@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+lib = File.expand_path("../../../lib", __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
+require "./chat"
+require "rack"
+require "anycable"
+
+# Turn AnyCable compatibility mode
+LiteCable.anycable!
+
+Anycable.configure do |config|
+  config.connection_factory = Chat::Connection
+  config.debug = true
+end
+
+Anycable::Server.start

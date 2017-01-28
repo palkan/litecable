@@ -21,3 +21,13 @@ Open your browser at [localhost:9292](http://localhost:9292), enter your name an
 Then open another session (another browser, incognito window) and repeat all steps using the same room ID.
 
 Now you can chat with yourself!
+
+## AnyCable usage
+
+This example also can be used with [AnyCable](http://anycable.io).
+
+Just run `Procfile` with your favourite tool ([hivemind](https://github.com/DarthSim/hivemind) or [Foreman](http://ddollar.github.io/foreman/)):
+
+```sh
+hivemind
+```

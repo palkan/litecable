@@ -1,4 +1,4 @@
-[![Gem Version](https://badge.fury.io/rb/litecable.svg)](https://rubygems.org/gems/litecable) [![Build Status](https://travis-ci.org/anycable/litecable.svg?branch=master)](https://travis-ci.org/anycable/litecable) [![Circle CI](https://circleci.com/gh/anycable/litecable/tree/master.svg?style=svg)](https://circleci.com/gh/anycable/anycable/tree/master)
+[![Gem Version](https://badge.fury.io/rb/litecable.svg)](https://rubygems.org/gems/litecable) [![Build Status](https://travis-ci.org/palkan/litecable.svg?branch=master)](https://travis-ci.org/palkan/litecable) [![Circle CI](https://circleci.com/gh/palkan/litecable/tree/master.svg?style=svg)](https://circleci.com/gh/palkan/litecable/tree/master)
 
 # Lite Cable
 
@@ -7,6 +7,9 @@ Lightweight ActionCable implementation.
 Contains application logic (channels, streams, broadcasting) and also (optional) Rack hijack based server (suitable only for development and test due to its simplicity).
 
 Compatible with [AnyCable](http://anycable.io) (for production usage).
+
+<a href="https://evilmartians.com/">
+<img src="https://evilmartians.com/badges/sponsored-by-evil-martians.svg" alt="Sponsored by Evil Martians" width="236" height="54"></a>
 
 ## Examples
 
@@ -73,11 +76,31 @@ Rack::Builder.new do
     use LiteCable::Server::Middleware, connection_class: App::Connection
     run proc { |_| [200, { 'Content-Type' => 'text/plain' }, ['OK']] }
   end
+end
 ```
 
 ### Using with AnyCable
 
-TBD
+Lite Cable is AnyCable-compatible out-of-the-box. You should write a simple server script:
+
+```ruby
+#!/usr/bin/env ruby
+
+require "my_app"
+require "rack"
+require "anycable"
+
+# Turn AnyCable compatibility mode
+LiteCable.anycable!
+
+Anycable.configure do |config|
+  config.connection_factory = MyApp::Connection
+end
+
+Anycable::Server.start
+```
+
+And then run this script along with your application. See [Sinatra example](https://github.com/palkan/litecable/tree/master/examples/sinatra) for more.
 
 ### Configuration
 

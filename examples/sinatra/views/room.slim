@@ -45,7 +45,7 @@ javascript:
   };
 
   ActionCable.startDebugging();
-  var cable = ActionCable.createConsumer('/cable?sid='+socketId);
+  var cable = ActionCable.createConsumer('#{{ CABLE_URL }}?sid=' + socketId);
 
   var chatChannel = cable.subscriptions.create(
     { channel: 'chat', id: roomId },

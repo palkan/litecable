@@ -19,7 +19,7 @@ module LiteCable
         subscriptions.keys
       end
 
-      def add(identifier)
+      def add(identifier, subscribe = true)
         raise AlreadySubscribedError if find(identifier)
 
         params = connection.coder.decode(identifier)
@@ -29,7 +29,7 @@ module LiteCable
         channel_class = Channel::Registry.find!(channel_id)
 
         subscriptions[identifier] = channel_class.new(connection, identifier, params)
-        subscribe_channel subscriptions[identifier]
+        subscribe ? subscribe_channel(subscriptions[identifier]) : subscriptions[identifier]
       end
 
       def remove(identifier)

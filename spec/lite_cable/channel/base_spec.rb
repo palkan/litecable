@@ -29,7 +29,7 @@ end
 describe TestChannel do
   let(:user) { "john" }
   let(:socket) { TestSocket.new }
-  let(:connection) { TestConnection.new(socket, encoded_identifiers: { "user" => user }) }
+  let(:connection) { TestConnection.new(socket, identifiers: { "user" => user }.to_json) }
   let(:params) { {} }
 
   subject { described_class.new(connection, "test", params) }

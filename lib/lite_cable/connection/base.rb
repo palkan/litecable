@@ -52,7 +52,7 @@ module LiteCable
         @streams = Streams.new(socket)
       end
 
-      def handle_connect
+      def handle_open
         connect if respond_to?(:connect)
         send_welcome_message
         log(:debug) { log_fmt("Opened") }
@@ -61,7 +61,7 @@ module LiteCable
         close
       end
 
-      def handle_disconnect
+      def handle_close
         disconnected!
         subscriptions.remove_all
 

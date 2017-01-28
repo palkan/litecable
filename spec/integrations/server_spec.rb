@@ -46,7 +46,7 @@ describe "Lite Cable server", :async do
       end
 
       def bulk(data)
-        LiteCable::Server.broadcast "global", message: data["message"], from: user, sid: sid
+        LiteCable.broadcast "global", message: data["message"], from: user, sid: sid
       end
     end
   end

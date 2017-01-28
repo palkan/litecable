@@ -19,28 +19,28 @@ describe TestBaseConnection do
 
   subject { described_class.new(socket) }
 
-  describe "#handle_connect" do
+  describe "#handle_open" do
     it "calls #connect method" do
-      subject.handle_connect
+      subject.handle_open
       expect(subject.connected).to eq true
     end
 
     it "sends welcome message" do
-      expect { subject.handle_connect }.to change(socket.transmissions, :size).by(1)
+      expect { subject.handle_open }.to change(socket.transmissions, :size).by(1)
       expect(socket.last_transmission).to eq("type" => "welcome")
     end
   end
 
-  describe "#handle_disconnect" do
+  describe "#handle_close" do
     it "calls #disconnect method" do
-      subject.handle_disconnect
+      subject.handle_close
       expect(subject.disconnected).to eq true
       expect(subject).to be_disconnected
     end
 
     it "calls #unsubscribe_from_all on subscriptions" do
       expect(subject.subscriptions).to receive(:remove_all)
-      subject.handle_disconnect
+      subject.handle_close
     end
   end
 
@@ -54,7 +54,7 @@ describe TestBaseConnection do
   describe "#transmit" do
     context "when disconnected" do
       it "doesn't transmit messages" do
-        subject.handle_disconnect
+        subject.handle_close
         expect { subject.transmit(data: "I'm alive!") }.not_to change(socket.transmissions, :size)
       end
     end

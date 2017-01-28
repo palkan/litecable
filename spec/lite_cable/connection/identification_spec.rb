@@ -30,7 +30,7 @@ describe TestIdentificationConnection do
   let(:socket) { TestSocket.new(socket_params) }
 
   subject do
-    described_class.new(socket).tap(&:handle_connect)
+    described_class.new(socket).tap(&:handle_open)
   end
 
   it "create accessors" do
@@ -77,9 +77,9 @@ describe TestIdentificationConnection do
   context "with encoded_identifiers" do
     prepend_before { allow(LiteCable.config).to receive(:identifier_coder).and_return(CustomIdCoder) }
 
-    let(:identifiers) { { "user" => "kcaj", "john" => false } }
+    let(:identifiers) { { "user" => "kcaj", "john" => false }.to_json }
 
-    subject { described_class.new(socket, encoded_identifiers: identifiers) }
+    subject { described_class.new(socket, identifiers: identifiers) }
 
     it "deserialize values from provided hash" do
       expect(subject.user).to eq "jack"

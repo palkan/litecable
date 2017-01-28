@@ -9,5 +9,8 @@ gem 'puma'
 gem 'pry-byebug'
 
 # litecable deps
-gem "anyway_config",  "~>0.5.0"
+gem "anyway_config", "~>0.5.0"
 gem "websocket"
+
+# anycable
+gem "anycable", "~> 0.4.2"

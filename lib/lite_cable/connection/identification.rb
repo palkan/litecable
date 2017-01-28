@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+require "set"
+
 module LiteCable
   module Connection
     module Identification # :nodoc:
@@ -33,8 +35,8 @@ module LiteCable
         end
       end
 
-      def initialize(socket, encoded_identifiers: {}, **hargs)
-        @encoded_ids = encoded_identifiers
+      def initialize(socket, identifiers: nil, **hargs)
+        @encoded_ids = identifiers ? JSON.parse(identifiers) : {}
         super socket, **hargs
       end
 

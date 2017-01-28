@@ -27,7 +27,7 @@ module Chat
     end
 
     def speak(data)
-      LiteCable::Server.broadcast "chat_#{chat_id}", user: user, message: data["message"], sid: sid
+      LiteCable.broadcast "chat_#{chat_id}", user: user, message: data["message"], sid: sid
     end
 
     private

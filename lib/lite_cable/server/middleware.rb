@@ -41,8 +41,8 @@ module LiteCable
       def init_connection(socket)
         connection = @connection_class.new(socket)
 
-        socket.onopen { connection.handle_connect }
-        socket.onclose { connection.handle_disconnect }
+        socket.onopen { connection.handle_open }
+        socket.onclose { connection.handle_close }
         socket.onmessage { |data| connection.handle_command(data) }
       end
 

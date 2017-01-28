@@ -17,17 +17,17 @@ describe TestAuthorizationConnection do
 
   subject { described_class.new(socket) }
 
-  describe "#handle_connect" do
+  describe "#handle_open" do
     it "raises exception if rejected" do
       expect(subject).to receive(:close)
-      expect { subject.handle_connect }.not_to change(socket.transmissions, :size)
+      expect { subject.handle_open }.not_to change(socket.transmissions, :size)
     end
 
     context "when accepted" do
       let(:cookies) { "user=john;" }
 
       it "succesfully connects" do
-        subject.handle_connect
+        subject.handle_open
         expect(subject.connected).to eq true
       end
     end
