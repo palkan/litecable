@@ -113,6 +113,8 @@ module LiteCable
           frame = WebSocket::Frame::Outgoing::Server.new(version: version, type: :close, code: 1000)
           @socket.write(frame.to_s) if frame.supported?
           @socket.close
+        rescue IOError, Errno::EPIPE, Errno::ETIMEDOUT # rubocop:disable Lint/HandleExceptions
+          # already closed
         end
 
         def keepalive
