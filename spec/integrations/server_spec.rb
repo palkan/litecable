@@ -70,7 +70,7 @@ describe "Lite Cable server", :async do
 
   let(:cookies) { "user=john" }
   let(:path) { "/?sid=123" }
-  let(:client) { @client = SyncClient.new("ws://127.0.0.1:3099#{path}", cookies) }
+  let(:client) { @client = SyncClient.new("ws://127.0.0.1:3099#{path}", cookies: cookies) }
   let(:logs) { ServerTest.logs }
 
   after { logs.clear }
@@ -127,7 +127,7 @@ describe "Lite Cable server", :async do
   end
 
   describe "broadcasts" do
-    let(:client2) { @client2 = SyncClient.new("ws://127.0.0.1:3099/?sid=234", "user=alice") }
+    let(:client2) { @client2 = SyncClient.new("ws://127.0.0.1:3099/?sid=234", cookies: "user=alice") }
 
     let(:clients) { [client, client2] }
 

@@ -56,7 +56,7 @@ module LiteCable
         when "unsubscribe" then remove(data["identifier"])
         when "message"     then perform_action(data["identifier"], data["data"])
         else
-          raise UnknownCommandError
+          raise UnknownCommandError, "Command not found #{command}"
         end
       end
 

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 module LiteCable
   module Server
-    require "lite_cable/server/websocket_ext/protocols"
     # Rack middleware to hijack the socket
     class Middleware
       class HijackNotAvailable < RuntimeError; end
@@ -30,10 +29,11 @@ module LiteCable
       private
 
       def send_handshake(env)
-        handshake = WebSocket::Handshake::Server.new
-        handshake.from_rack env
-        handshake.protocols LiteCable::INTERNAL[:protocols]
+        handshake = WebSocket::Handshake::Server.new(
+          protocols: LiteCable::INTERNAL[:protocols]
+        )
 
+        handshake.from_rack env
         env['rack.hijack_io'].write handshake.to_s
         handshake
       end

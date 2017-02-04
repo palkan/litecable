@@ -11,7 +11,7 @@ class SyncClient
 
   attr_reader :pings
 
-  def initialize(url, cookies = '')
+  def initialize(url, cookies: '')
     messages = @messages = Queue.new
     closed = @closed = Concurrent::Event.new
     has_messages = @has_messages = Concurrent::Semaphore.new(0)
@@ -19,7 +19,12 @@ class SyncClient
 
     open = Concurrent::Promise.new
 
-    @ws = WebSocket::Client::Simple.connect(url, headers: { 'COOKIE' => cookies }) do |ws|
+    @ws = WebSocket::Client::Simple.connect(
+      url,
+      headers: {
+        'COOKIE' => cookies
+      }
+    ) do |ws|
       ws.on(:error) do |event|
         event = RuntimeError.new(event.message) unless event.is_a?(Exception)
 
