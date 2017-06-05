@@ -13,7 +13,9 @@ Compatible with [AnyCable](http://anycable.io) (for production usage).
 
 ## Examples
 
-- [Sinatra Lite Cable Chat](https://github.com/palkan/litecable/tree/master/examples/sinatra)
+- [Sinatra LiteCable Chat](https://github.com/palkan/litecable/tree/master/examples/sinatra)
+
+- [Connecting LiteCable to Hanami](http://gabrielmalakias.com.br/ruby/hanami/iot/2017/05/26/websockets-connecting-litecable-to-hanami.html) by [@GabrielMalakias](https://github.com/GabrielMalakias)
 
 ## Installation
 
