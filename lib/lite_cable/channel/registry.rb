@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module LiteCable
   module Channel
     # Stores channels identifiers and corresponding classes.

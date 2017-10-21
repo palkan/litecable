@@ -1,16 +1,17 @@
 # frozen_string_literal: true
+
 require "spec_helper"
 
 class TestChannel < LiteCable::Channel::Base
-  attr_reader :subscribed, :unsubscribed, :follows, :received
+  attr_reader :subscribe, :unsubscribe, :follows, :received
 
   def subscribed
     reject if params["reject"]
-    @subscribed = true
+    @subscribe = true
   end
 
   def unsubscribed
-    @unsubscribed = true
+    @unsubscribe = true
   end
 
   def receive(data)
@@ -41,7 +42,7 @@ describe TestChannel do
   describe "#handle_subscribe" do
     it "calls #subscribed method" do
       subject.handle_subscribe
-      expect(subject.subscribed).to eq true
+      expect(subject.subscribe).to eq true
     end
 
     context "when rejects" do
@@ -56,7 +57,7 @@ describe TestChannel do
   describe "#handle_unsubscribe" do
     it "calls #unsubscribed method" do
       subject.handle_unsubscribe
-      expect(subject.unsubscribed).to eq true
+      expect(subject.unsubscribe).to eq true
     end
   end
 

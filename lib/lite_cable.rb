@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "lite_cable/version"
 require "lite_cable/internal"
 require "lite_cable/logging"

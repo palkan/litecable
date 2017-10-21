@@ -10,11 +10,17 @@ AllCops:
     - 'tmp/**/*'
     - 'bench/**/*'
     - 'lib/anycable/rpc/**/*'
+    - 'vendor/**/*'
+    - 'gemfiles/**/*'
+    - 'Gemfile'
+    - 'Rakefile'
+    - 'examples/**/*'
+    - '*.gemspec'
   DisplayCopNames: true
   StyleGuideCopsOnly: false
   TargetRubyVersion: 2.3
 
-Style/AccessorMethodName:
+Naming/AccessorMethodName:
   Enabled: false
 
 Style/TrivialAccessors:
@@ -30,12 +36,15 @@ Style/ParallelAssignment:
 Style/StringLiterals:
   Enabled: false
 
-Style/SpaceInsideStringInterpolation:
+Layout/SpaceInsideStringInterpolation:
   EnforcedStyle: no_space
 
 Style/BlockDelimiters:
   Exclude:
     - 'spec/**/*.rb'
+
+Style/NumericPredicate:
+  Enabled: false
 
 Lint/AmbiguousRegexpLiteral:
   Enabled: false
@@ -46,6 +55,9 @@ Lint/AssignmentInCondition:
 Metrics/MethodLength:
   Exclude:
     - 'spec/**/*.rb'
+
+Metrics/AbcSize:
+  Max: 20
 
 Metrics/LineLength:
   Max: 100

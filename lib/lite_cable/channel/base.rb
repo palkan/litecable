@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module LiteCable
   # rubocop:disable Metrics/LineLength
   module Channel

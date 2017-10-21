@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module LiteCable
   module Server
     # From https://github.com/rails/rails/blob/v5.0.1/actioncable/lib/action_cable/subscription_adapter/subscriber_map.rb

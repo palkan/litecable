@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module LiteCable
   module Connection
     # Manage the connection channels and route messages

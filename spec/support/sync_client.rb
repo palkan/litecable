@@ -11,6 +11,8 @@ class SyncClient
 
   attr_reader :pings
 
+  # rubocop: disable Metrics/AbcSize
+  # rubocop: disable Metrics/PerceivedComplexity
   def initialize(url, cookies: '')
     messages = @messages = Queue.new
     closed = @closed = Concurrent::Event.new
@@ -36,7 +38,7 @@ class SyncClient
         end
       end
 
-      ws.on(:open) do |event|
+      ws.on(:open) do |_event|
         open.set(true)
       end
 
@@ -54,7 +56,7 @@ class SyncClient
         end
       end
 
-      ws.on(:close) do |event|
+      ws.on(:close) do |_event|
         closed.set
       end
     end
@@ -74,14 +76,12 @@ class SyncClient
   def read_messages(expected_size = 0)
     list = []
     loop do
-      if @has_messages.try_acquire(1, list.size < expected_size ? WAIT_WHEN_EXPECTING_EVENT : WAIT_WHEN_NOT_EXPECTING_EVENT)
-        msg = @messages.pop(true)
-        raise msg if msg.is_a?(Exception)
+      break unless @has_messages.try_acquire(1, list.size < expected_size ? WAIT_WHEN_EXPECTING_EVENT : WAIT_WHEN_NOT_EXPECTING_EVENT)
 
-        list << msg
-      else
-        break
-      end
+      msg = @messages.pop(true)
+      raise msg if msg.is_a?(Exception)
+
+      list << msg
     end
     list
   end
@@ -93,9 +93,7 @@ class SyncClient
   def close
     sleep WAIT_WHEN_NOT_EXPECTING_EVENT
 
-    unless @messages.empty?
-      raise "#{@messages.size} messages unprocessed"
-    end
+    raise "#{@messages.size} messages unprocessed" unless @messages.empty?
 
     @ws.close
     wait_for_close
