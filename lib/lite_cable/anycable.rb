@@ -15,9 +15,12 @@ module LiteCable # :nodoc:
         base.prepend InstanceMethods
       end
 
-      def create(socket, **options)
+      def call(socket, **options)
         new(socket, **options)
       end
+
+      # Backward compatibility with AnyCable <= 0.4
+      alias create call
 
       module InstanceMethods # :nodoc:
         def initialize(socket, subscriptions: nil, **hargs)

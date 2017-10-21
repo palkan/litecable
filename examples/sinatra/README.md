@@ -26,6 +26,8 @@ Now you can chat with yourself!
 
 This example also can be used with [AnyCable](http://anycable.io).
 
+You need [`anycable-go`](https://github.com/anycable/anycable-go) installed.
+
 Just run `Procfile` with your favourite tool ([hivemind](https://github.com/DarthSim/hivemind) or [Foreman](http://ddollar.github.io/foreman/)):
 
 ```sh

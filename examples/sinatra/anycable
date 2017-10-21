@@ -11,9 +11,6 @@ require "anycable"
 # Turn AnyCable compatibility mode
 LiteCable.anycable!
 
-Anycable.configure do |config|
-  config.connection_factory = Chat::Connection
-  config.debug = true
-end
+Anycable.connection_factory = Chat::Connection
 
 Anycable::Server.start

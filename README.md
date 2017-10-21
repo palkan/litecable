@@ -96,9 +96,7 @@ require "anycable"
 # Turn AnyCable compatibility mode
 LiteCable.anycable!
 
-Anycable.configure do |config|
-  config.connection_factory = MyApp::Connection
-end
+Anycable.connection_factory = MyApp::Connection
 
 Anycable::Server.start
 ```
