@@ -73,7 +73,7 @@ module LiteCable
                 @message_handlers.each do |h|
                   begin
                     h.call(data)
-                  rescue => e # rubocop: disable Lint/RescueWithoutErrorClass
+                  rescue => e # rubocop: disable Style/RescueStandardError
                     log(:error, "Socket receive failed: #{e}")
                     @error_handlers.each { |eh| eh.call(e, data) }
                     close if close_on_error
