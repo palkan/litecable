@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "anyway_config", "~> 1.0"
+  spec.add_dependency "anyway_config", "1.1.3"
 
   spec.add_development_dependency "rack", "~> 2.0"
   spec.add_development_dependency "websocket", "~> 1.2.4"
