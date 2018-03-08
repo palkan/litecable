@@ -1,0 +1,2 @@
+web: IODINE=1 bundle exec puma
+ws:  IODINE=1 bundle exec iodine -v -p 9293 config.iodine.ru

@@ -1,3 +1,4 @@
+# coding: utf-8
 # frozen_string_literal: true
 
 module LiteCable
@@ -18,6 +19,7 @@ module LiteCable
         @sync.synchronize do
           @streams[stream][channel] << socket
           @sockets[socket] << [channel, stream]
+          yield stream if block_given?
         end
       end
 
@@ -26,6 +28,7 @@ module LiteCable
           @streams[stream][channel].delete(socket)
           @sockets[socket].delete([channel, stream])
           cleanup stream, socket, channel
+          yield stream if block_given?
         end
       end
 
@@ -36,7 +39,9 @@ module LiteCable
         end
 
         list.each do |(channel_id, stream)|
-          remove_subscriber(stream, socket, channel) if channel == channel_id
+          if channel == channel_id
+            remove_subscriber(stream, socket, channel) { |s| yield(s) if block_given? }
+          end
         end
       end
 

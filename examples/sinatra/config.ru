@@ -17,6 +17,9 @@ end
 if ENV['ANYCABLE']
   # Turn AnyCable compatibility mode
   LiteCable.anycable!
+elsif ENV['IODINE']
+  # Turn Iodine compatibility mode
+  LiteCable.iodine!
 else
   require "lite_cable/server"
 

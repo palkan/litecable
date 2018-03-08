@@ -1,3 +1,4 @@
+# coding: utf-8
 # frozen_string_literal: true
 
 module LiteCable
@@ -74,6 +75,7 @@ module LiteCable
         command = decode(websocket_message)
         subscriptions.execute_command command
       rescue Subscriptions::Error, Channel::Error, Channel::Registry::Error => e
+        # TODO: может backtrace сюда добавить?
         log(:error, log_fmt("Connection command failed: #{e}"))
         close
       end
