@@ -125,21 +125,15 @@ module LiteCable # :nodoc:
       end
 
       def subscribe(channel, stream)
-        subscribers_map.add_subscriber(stream, self, channel) do
-          socket.subscribe(channel: stream)
-        end
+        subscribers_map.add_subscriber(stream, self, channel)
       end
 
       def unsubscribe(channel, stream)
-        subscribers_map.remove_subscriber(stream, self, channel) do
-          unsubscribe_from_stream(stream)
-        end
+        subscribers_map.remove_subscriber(stream, self, channel)
       end
 
       def unsubscribe_from_all(channel)
-        subscribers_map.remove_socket(self, channel) do |stream|
-          unsubscribe_from_stream(stream)
-        end
+        subscribers_map.remove_socket(self, channel)
       end
 
       def close
@@ -147,11 +141,6 @@ module LiteCable # :nodoc:
       end
 
       private
-      def unsubscribe_from_stream(stream)
-        subscription_id = socket.subscribed?(channel: stream)
-        socket.unsubscribe(subscription_id)
-      end
-
       def subscribers_map
         LiteCable::Server.subscribers_map
       end
