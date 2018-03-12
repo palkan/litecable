@@ -42,32 +42,3 @@ Run `Procfile.iodine` as in AnyCable example:
 ```sh
 hivemind Procfile.iodine
 ```
-
-Also it possible to run whole app(sinatra and litecable) with one Iodine server, like this:
-
-```ruby
-# config.ru
-lib = File.expand_path("../../../lib", __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-
-require './app'
-require './chat'
-
-LiteCable.iodine!
-LiteCable::Iodine.connection_factory = Chat::Connection
-
-app = Rack::Builder.new do
-  map '/' do
-    run App
-  end
-  map '/cable' do
-    run LiteCable::Iodine::RackApp
-  end
-end
-
-run app
-```
-
-```sh
-bundle exec iodine -v -p 9293
-```

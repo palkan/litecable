@@ -8,6 +8,7 @@ module LiteCable
       class Base
         include Logging
         include Subscriptions
+        include Handlers
 
         attr_reader :version, :active
 
@@ -18,12 +19,9 @@ module LiteCable
           @version = version
           @active = true
 
-          @open_handlers    = []
-          @message_handlers = []
-          @close_handlers   = []
-          @error_handlers   = []
-
           @close_on_error = true
+
+          init_handlers
         end
 
         def prevent_close_on_error
@@ -44,22 +42,6 @@ module LiteCable
 
         def request
           @request ||= Rack::Request.new(@env)
-        end
-
-        def onopen(&block)
-          @open_handlers << block
-        end
-
-        def onmessage(&block)
-          @message_handlers << block
-        end
-
-        def onclose(&block)
-          @close_handlers << block
-        end
-
-        def onerror(&block)
-          @error_handlers << block
         end
 
         # rubocop: disable Metrics/MethodLength

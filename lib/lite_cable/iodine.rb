@@ -2,12 +2,19 @@
 # frozen_string_literal: true
 
 # TODO:
-# 1. broadcast извне сервера Iodine(например из экшена синатры) не работает.
-# Мб решится, если настроить его через Redis pub\sub engine(быстро не завелось).
-# 2. если запускать весь апп(синатру и ws) одним сервером Iodine, то пишет порой странные
-# ошибки с памятью из c-extension - issue в iodine закинуть.
-# 3. ConnectionSocket и RackApp это сильно похоже на ClientSocket и Middlerware из
-# сервера. Неплохо бы их переюзать
+# 1. broadcast работает только изнутри сервера Iodine(т.е. если хочется его из экшенов
+# синатры, а не из канала, то надо синатру и каналы запускать сервером iodine).
+# Заработает снаружи, если сделать что-то из этого:
+# a) сделать http путь типо /broadcast изнутри iodine rack.
+# b) запустить и синатру и каналы через сервер iodine(т.е. пуму убрать)
+# c) юзать Redis как pubsub engine И сделать доп. фикс -
+# или делать руками PUBLISH в redis,
+# или если Iodine научится запускаться без запуска сервера, как клиент к pubsub'у.
+#
+# 2. какие-то траблы с памятью при использовании одновременно с синатрой
+# https://github.com/boazsegev/iodine/issues/27
+#
+# 3. puts не работает внутри rack и сообщений с вебсокетов.
 
 module LiteCable # :nodoc:
   # Iodine extensions
@@ -19,10 +26,6 @@ module LiteCable # :nodoc:
     require "lite_cable/server"
 
     BROADCASTING_STREAM = :litecable_broadcasting
-
-    class << self
-      attr_accessor :connection_factory # мб не нужно, если запускать как Middleware
-    end
 
     module Server # :nodoc:
       class << self
@@ -55,12 +58,6 @@ module LiteCable # :nodoc:
       end
     end
 
-    module Connection # :nodoc:
-      def call(socket, **options)
-        new(socket, **options)
-      end
-    end
-
     # Wrapper over Iodine websocket
     class Websocket
       attr_reader :handler
@@ -78,7 +75,6 @@ module LiteCable # :nodoc:
         handler.handle_message(data) if handler.respond_to?(:handle_message)
       end
 
-      # socket closed
       def on_close
         handler.handle_close if handler.respond_to?(:handle_close)
       end
@@ -93,44 +89,23 @@ module LiteCable # :nodoc:
     class ConnectionSocket
       include Logging
       include LiteCable::Server::ClientSocket::Subscriptions
+      # TODO: not really cool, and besides, there is still a duplication with ClientSocket:
+      # 'request' and 'close_on_error'
+      include LiteCable::Server::ClientSocket::Handlers
 
-      attr_reader :connection, :socket, :close_on_error
+      attr_reader :socket, :close_on_error
 
       def initialize(env)
         @env = env
         @socket = LiteCable::Iodine::Websocket.new(self)
 
-        @open_handlers     = []
-        @message_handlers  = []
-        @close_handlers    = []
-        @shutdown_handlers = []
-        @error_handlers    = []
-
         @close_on_error = true
+
+        init_handlers
       end
 
       def prevent_close_on_error
         @close_on_error = false
-      end
-
-      def on_open(&block)
-        @open_handlers << block
-      end
-
-      def on_message(&block)
-        @message_handlers << block
-      end
-
-      def on_close(&block)
-        @close_handlers << block
-      end
-
-      def on_shutdown(&block)
-        @shutdown_handlers << block
-      end
-
-      def on_error(&block)
-        @error_handlers << block
       end
 
       ## Websocket handlers
@@ -138,7 +113,7 @@ module LiteCable # :nodoc:
         @open_handlers.each(&:call)
       end
 
-      def handle_message
+      def handle_message(data)
         @message_handlers.each do |h|
           begin
             h.call(data)
@@ -172,12 +147,7 @@ module LiteCable # :nodoc:
       end
     end
 
-    module RackApp # :nodoc:
-      def initialize(_app, connection_class:)
-        # @connection_class = connection_class
-        @heart_beat = HeartBeat.new
-      end
-
+    class RackApp < LiteCable::Server::Middleware # :nodoc:
       def call(env)
         # 'upgrade.websocket?' - iodine rack extension
         unless env['upgrade.websocket?']
@@ -185,7 +155,7 @@ module LiteCable # :nodoc:
         end
 
         conn = LiteCable::Iodine::ConnectionSocket.new(env)
-        env['upgrade.websocket'] = conn.socket # like socket.listen?
+        env['upgrade.websocket'] = conn.socket
 
         init_connection(conn)
         init_heartbeat(conn)
@@ -193,33 +163,15 @@ module LiteCable # :nodoc:
         # iodine doesn't handle sec-websocket-protocol
         # https://github.com/boazsegev/iodine/blob/master/ext/iodine/websockets.c#L684
         # and likely doesn't handle old protocol versions too
-        headers = {}
-        protocol_header = env["HTTP_SEC_WEBSOCKET_PROTOCOL"]
-        if protocol_header
-          headers["Sec-WebSocket-Protocol"] = protocol_header.split(/ *, */).first
-        end
+        protocol = env["HTTP_SEC_WEBSOCKET_PROTOCOL"]&.split(/ *, */)&.first
+        headers = protocol ? { 'Sec-WebSocket-Protocol': protocol } : {}
         [0, headers, []]
-      end
-
-      def init_connection(socket)
-        # connection = @connection_class.new(socket)
-        connection = LiteCable::Iodine.connection_factory.call(socket)
-
-        socket.on_open { connection.handle_open }
-        socket.on_close { connection.handle_close }
-        socket.on_message { |data| connection.handle_command(data) }
-      end
-
-      def init_heartbeat(socket)
-        @heart_beat.add(socket)
-        socket.on_close { @heart_beat.remove(socket) }
       end
     end
   end
 
   # Patch Lite Cable with Iodine functionality
   def self.iodine!
-    LiteCable::Connection::Base.extend LiteCable::Iodine::Connection
     LiteCable.singleton_class.prepend LiteCable::Iodine::Broadcasting
 
     LiteCable::Iodine::Server.setup_broadcast

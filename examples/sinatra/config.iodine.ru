@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-# coding: utf-8
 # frozen_string_literal: true
 
 lib = File.expand_path("../../../lib", __FILE__)
@@ -11,8 +10,14 @@ require "rack"
 LiteCable.config.log_level = Logger::DEBUG
 
 # Turn Iodine compatibility mode
+# Iodine.default_pubsub = Iodine::PubSub::RedisEngine.new('localhost')
 LiteCable.iodine!
-# LiteCable::Iodine.connection_factory = Chat::Connection
 
-# FIXME nil, серьезно?
-run LiteCable::Iodine::RackApp.new(nil, connection_class: Chat::Connection)
+app = Rack::Builder.new do
+  map '/cable' do
+    use LiteCable::Iodine::RackApp, connection_class: Chat::Connection
+    run proc { |_| [200, { 'Content-Type' => 'text/plain' }, ['OK']] }
+  end
+end
+
+run app
