@@ -12,6 +12,7 @@ LiteCable.config.log_level = Logger::DEBUG
 
 # Turn Iodine compatibility mode
 LiteCable.iodine!
-LiteCable::Iodine.connection_factory = Chat::Connection
+# LiteCable::Iodine.connection_factory = Chat::Connection
 
-run LiteCable::Iodine::RackApp
+# FIXME nil, серьезно?
+run LiteCable::Iodine::RackApp.new(nil, connection_class: Chat::Connection)
