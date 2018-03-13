@@ -36,7 +36,11 @@ module LiteCable # :nodoc:
         def setup_broadcast
           ::Iodine.subscribe(channel: LiteCable::Iodine::BROADCASTING_STREAM) do |_ch, json_msg|
             msg = JSON.parse(json_msg)
-            LiteCable::Server.broadcast(msg["stream"], msg["payload"])
+            # rubocop: disable Security/MarshalLoad - security risk only if pubsub engine
+            # is Redis and it has open access to internet
+            coder = msg['coder'] ? Marshal.load(msg['coder']) : LiteCable.config.coder
+            # rubocop: enable Security/MarshalLoad
+            LiteCable::Server.broadcast(msg["stream"], msg["payload"], coder: coder)
           end
         end
       end
@@ -44,16 +48,8 @@ module LiteCable # :nodoc:
 
     module Broadcasting # :nodoc:
       def broadcast(stream, message, coder: nil)
-        # TODO: судя по всему в Anycable тоже ожидается только один кодер - json. Иначе
-        # сервер поломается, так как расшифровывает message, чтобы добавить в него identifier
-        # https://github.com/anycable/erlycable/blob/8600e61a256db2c48702e431c02958a871a25e51/src/erlycable_server.erl#L174
-        # С iodine тоже сложно передать coder и впихнуть identifier, разве что через
-        # сериализацию всего класса coder и его передачу процессам.
-        coder ||= LiteCable.config.coder # not used now
-        msg = {
-          stream: stream,
-          payload: message, # coder.encode(message)
-        }
+        msg = { stream: stream, payload: message }
+        msg[:coder] = Marshal.dump(coder) if coder
         ::Iodine.publish(channel: LiteCable::Iodine::BROADCASTING_STREAM, message: msg.to_json)
       end
     end
