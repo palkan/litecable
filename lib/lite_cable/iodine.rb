@@ -11,10 +11,7 @@
 # или делать руками PUBLISH в redis,
 # или если Iodine научится запускаться без запуска сервера, как клиент к pubsub'у.
 #
-# 2. какие-то траблы с памятью при использовании одновременно с синатрой
-# https://github.com/boazsegev/iodine/issues/27
-#
-# 3. puts не работает внутри rack и сообщений с вебсокетов.
+# 2. puts не работает внутри rack и сообщений с вебсокетов.
 
 module LiteCable # :nodoc:
   # Iodine extensions
