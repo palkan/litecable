@@ -103,6 +103,40 @@ Anycable::Server.start
 
 And then run this script along with your application. See [Sinatra example](https://github.com/palkan/litecable/tree/master/examples/sinatra) for more.
 
+### Using with Iodine
+
+Lite Cable is also compatible with [Iodine](https://github.com/boazsegev/iodine) out-of-the-box.
+It is middleware like built-in server, so you can just add iodine gem and run it like this:
+
+```ruby
+#!/usr/bin/env ruby
+
+require "my_app"
+require "rack"
+require "iodine"
+
+# initialize the Redis engine if needed
+if ENV["REDIS_URL"]
+  uri = URI(ENV["REDIS_URL"])
+  Iodine.default_pubsub = Iodine::PubSub::RedisEngine.new(uri.host, uri.port, 0, uri.password)
+else
+  puts "* No Redis, it's okay, pub/sub will still works inside Iodine connections"
+end
+
+LiteCable.iodine!
+
+app = Rack::Builder.new do
+  map '/cable' do
+    # You have to specify your app's connection class
+    use LiteCable::Iodine::RackApp, connection_class: App::Connection
+    run proc { |_| [200, { 'Content-Type' => 'text/plain' }, ['OK']] }
+  end
+end
+
+run app
+
+```
+
 ### Configuration
 
 Lite Cable uses [anyway_config](https://github.com/palkan/anyway_config) for configuration.
@@ -126,4 +160,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/anycab
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-

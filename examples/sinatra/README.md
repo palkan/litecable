@@ -37,32 +37,7 @@ hivemind
 
 ### Iodine usage
 
-Iodine integration basically is a rack middleware. So you can run it like this:
-
-```ruby
-require "rack"
-
-# initialize the Redis engine if needed
-if ENV["REDIS_URL"]
-  uri = URI(ENV["REDIS_URL"])
-  Iodine.default_pubsub = Iodine::PubSub::RedisEngine.new(uri.host, uri.port, 0, uri.password)
-else
-  puts "* No Redis, it's okay, pub/sub will still run inside connection"
-end
-
-LiteCable.iodine!
-
-app = Rack::Builder.new do
-  map '/cable' do
-    use LiteCable::Iodine::RackApp, connection_class: My::App::Connection
-    run proc { |_| [200, { 'Content-Type' => 'text/plain' }, ['OK']] }
-  end
-end
-
-run app
-```
-
-For more real-life example run `Procfile.iodine` like in AnyCable example:
+Run `Procfile.iodine` as in AnyCable example:
 
 ```sh
 hivemind Procfile.iodine
