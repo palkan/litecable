@@ -6,14 +6,9 @@ gem 'slim'
 
 gem 'puma'
 
-gem 'pry-byebug'
-
+gem 'litecable'
 # litecable deps
-gem "anyway_config", "~> 1.0"
 gem "websocket", "~> 1.2.4"
-
-# anycable
-gem "anycable", "~> 0.5.0"
 
 # iodine
 gem 'iodine', '~> 0.4.18'

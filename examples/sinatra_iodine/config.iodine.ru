@@ -4,13 +4,11 @@
 lib = File.expand_path("../../../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
-require "./chat"
-require "rack"
+require "../shared/chat"
+require "iodine"
 
 LiteCable.config.log_level = Logger::DEBUG
-
 # Turn Iodine compatibility mode
-# Iodine.default_pubsub = Iodine::PubSub::RedisEngine.new('localhost')
 LiteCable.iodine!
 
 app = Rack::Builder.new do

@@ -4,6 +4,11 @@ Sample chat application built with [Sinatra](http://www.sinatrarb.com) and Lite 
 
 ## Usage
 
+Go to built-in server example folder:
+```sh
+cd sinatra_builtin
+```
+
 Install dependencies:
 
 ```sh
@@ -29,7 +34,18 @@ This example also can be used with [AnyCable](http://anycable.io) or [Iodine](ht
 ### AnyCable usage
 You need [`anycable-go`](https://github.com/anycable/anycable-go) installed.
 
-Just run `Procfile` with your favourite tool ([hivemind](https://github.com/DarthSim/hivemind) or [Foreman](http://ddollar.github.io/foreman/)):
+Go to the Anycable example folder:
+```sh
+cd sinatra_anycable
+```
+
+Install dependencies:
+
+```sh
+bundle install
+```
+
+And just run `Procfile` with your favourite tool ([hivemind](https://github.com/DarthSim/hivemind) or [Foreman](http://ddollar.github.io/foreman/)):
 
 ```sh
 hivemind
@@ -37,8 +53,19 @@ hivemind
 
 ### Iodine usage
 
-Run `Procfile.iodine` as in AnyCable example:
+Go to the Iodine example folder:
+```sh
+cd sinatra_iodine
+```
+
+Install dependencies:
 
 ```sh
-hivemind Procfile.iodine
+bundle install
+```
+
+and run `Procfile` as in AnyCable example:
+
+```sh
+hivemind
 ```

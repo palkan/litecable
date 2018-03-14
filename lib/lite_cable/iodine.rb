@@ -13,10 +13,10 @@
 #
 # 2. puts не работает внутри rack и сообщений с вебсокетов.
 
+
 module LiteCable # :nodoc:
   # Iodine extensions
   module Iodine
-    require "iodine"
     # LiteCable::Server needs for subscribers_map -
     # because Iodine don't have unsubscribe_from_all feature
     # and can broadcast only for whole stream, without specific channel_id in message
