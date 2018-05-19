@@ -16,7 +16,7 @@ module LiteCable # :nodoc:
       end
 
       def call(socket, **options)
-        new(socket, **options)
+        new(socket, options)
       end
 
       # Backward compatibility with AnyCable <= 0.4
