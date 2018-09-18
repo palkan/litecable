@@ -129,6 +129,7 @@ module LiteCable
         action = extract_action(data)
 
         raise UnproccessableActionError unless processable_action?(action)
+
         log(:debug) { log_fmt("Perform action #{action}(#{data})") }
         dispatch_action(action, data)
       end

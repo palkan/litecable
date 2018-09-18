@@ -80,6 +80,7 @@ module LiteCable
 
       def transmit(cable_message)
         return if disconnected?
+
         socket.transmit encode(cable_message)
       end
 

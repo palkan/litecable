@@ -32,6 +32,7 @@ module LiteCable
       def remove_socket(socket, channel)
         list = @sync.synchronize do
           return unless @sockets.key?(socket)
+
           @sockets[socket].dup
         end
 
@@ -43,6 +44,7 @@ module LiteCable
       def broadcast(stream, message, coder)
         list = @sync.synchronize do
           return unless @streams.key?(stream)
+
           @streams[stream].to_a
         end
 
