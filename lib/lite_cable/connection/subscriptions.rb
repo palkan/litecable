@@ -68,6 +68,7 @@ module LiteCable
       def find!(identifier)
         channel = find(identifier)
         raise ChannelNotFoundError unless channel
+
         channel
       end
 

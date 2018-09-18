@@ -14,6 +14,7 @@ module LiteCable
             define_method(identifier) do
               return instance_variable_get(:"@#{identifier}") if
                 instance_variable_defined?(:"@#{identifier}")
+
               fetch_identifier(identifier.to_s)
             end
           end
@@ -67,6 +68,7 @@ module LiteCable
         identifiers.each_with_object({}) do |id, acc|
           obj = instance_variable_get("@#{id}")
           next unless obj
+
           acc[id.to_s] = LiteCable.config.identifier_coder.encode(obj)
         end
       end

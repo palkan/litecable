@@ -23,6 +23,7 @@ module LiteCable
 
     def log(level, message = nil)
       return unless LiteCable::Logging.logger
+
       LiteCable::Logging.logger.send(level, PREFIX) { message || yield }
     end
   end

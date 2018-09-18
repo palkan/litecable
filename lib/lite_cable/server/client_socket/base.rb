@@ -148,6 +148,7 @@ module LiteCable
               data, _addrinfo = socket.readpartial(2000), socket.peeraddr
             end
             break if data.empty?
+
             framebuffer << data
             while frame = framebuffer.next
               case frame.type

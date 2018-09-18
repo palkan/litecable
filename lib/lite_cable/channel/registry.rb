@@ -11,6 +11,7 @@ module LiteCable
       class << self
         def add(id, channel_class)
           raise AlreadyRegisteredError if find(id)
+
           channels[id] = channel_class
         end
 
@@ -21,6 +22,7 @@ module LiteCable
         def find!(id)
           channel_class = find(id)
           raise UnknownChannelError unless channel_class
+
           channel_class
         end
 
