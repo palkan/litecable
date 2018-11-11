@@ -6,6 +6,8 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require '../shared/app'
 require '../shared//chat'
 
+CABLE_URL = "/cable"
+
 LiteCable.config.log_level = Logger::DEBUG
 
 app = Rack::Builder.new do
@@ -14,16 +16,11 @@ app = Rack::Builder.new do
   end
 end
 
-if ENV['ANYCABLE']
-  # Turn AnyCable compatibility mode
-  LiteCable.anycable!
-else
-  require "lite_cable/server"
+require "lite_cable/server"
 
-  app.map '/cable' do
-    use LiteCable::Server::Middleware, connection_class: Chat::Connection
-    run proc { |_| [200, { 'Content-Type' => 'text/plain' }, ['OK']] }
-  end
+app.map '/cable' do
+  use LiteCable::Server::Middleware, connection_class: Chat::Connection
+  run proc { |_| [200, { 'Content-Type' => 'text/plain' }, ['OK']] }
 end
 
 run app
