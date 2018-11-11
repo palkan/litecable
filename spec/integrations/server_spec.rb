@@ -2,7 +2,13 @@
 
 require "spec_helper"
 
-require "puma"
+if ENV['IODINE']
+  require 'lite_cable/iodine_server'
+  require "iodine"
+else
+  require 'lite_cable/server'
+  require "puma"
+end
 
 shared_examples "Lite Cable server" do
   let(:cookies) { "user=john" }
@@ -93,7 +99,7 @@ shared_examples "Lite Cable server" do
   end
 end
 
-context 'default Server (puma)', :async do
+context 'default Server (puma)', :async, unless: ENV['IODINE'] do
   include_examples 'Lite Cable server' do
     before(:all) do
       @server = ::Puma::Server.new(
@@ -110,6 +116,25 @@ context 'default Server (puma)', :async do
     after(:all) do
       @server&.stop(true)
       @server_t&.join
+    end
+  end
+end
+
+context 'IodineServer', :async, if: ENV['IODINE'] do
+  include_examples 'Lite Cable server' do
+    before(:all) do
+      Iodine.workers = 1
+      Iodine.threads = 4
+      @server = Thread.new do
+        Iodine::Rack.run(
+          LiteCable::Server::Middleware.new(nil, connection_class: ServerTest::Connection),
+          Port: '3099', Address: '127.0.0.1'
+        )
+      end
+    end
+
+    after(:all) do
+      Iodine.stop
     end
   end
 end

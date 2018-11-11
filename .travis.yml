@@ -5,3 +5,4 @@ matrix:
   include:
     - rvm: 2.3.3
     - rvm: 2.4.0
+    - IODINE=true
