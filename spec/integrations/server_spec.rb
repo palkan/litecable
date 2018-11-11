@@ -4,24 +4,7 @@ require "spec_helper"
 
 require "puma"
 
-describe "Lite Cable server", :async do
-  before(:all) do
-    @server = ::Puma::Server.new(
-      LiteCable::Server::Middleware.new(nil, connection_class: ServerTest::Connection),
-      ::Puma::Events.strings
-    )
-    @server.add_tcp_listener "127.0.0.1", 3099
-    @server.min_threads = 1
-    @server.max_threads = 4
-
-    @server_t = Thread.new { @server.run.join }
-  end
-
-  after(:all) do
-    @server&.stop(true)
-    @server_t&.join
-  end
-
+shared_examples "Lite Cable server" do
   let(:cookies) { "user=john" }
   let(:path) { "/?sid=123" }
   let(:client) { @client = SyncClient.new("ws://127.0.0.1:3099#{path}", cookies: cookies) }
@@ -106,6 +89,27 @@ describe "Lite Cable server", :async do
       concurrently(clients) do |c|
         expect(c.read_message).to eq("identifier" => "{\"channel\":\"echo\"}", "message" => { "message" => "A-W-E-S-O-M-E", "from" => "alice", "sid" => "234" })
       end
+    end
+  end
+end
+
+context 'default Server (puma)', :async do
+  include_examples 'Lite Cable server' do
+    before(:all) do
+      @server = ::Puma::Server.new(
+        LiteCable::Server::Middleware.new(nil, connection_class: ServerTest::Connection),
+        ::Puma::Events.strings
+      )
+      @server.add_tcp_listener "127.0.0.1", 3099
+      @server.min_threads = 1
+      @server.max_threads = 4
+
+      @server_t = Thread.new { @server.run.join }
+    end
+
+    after(:all) do
+      @server&.stop(true)
+      @server_t&.join
     end
   end
 end
