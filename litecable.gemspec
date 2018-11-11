@@ -18,6 +18,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "anyway_config", "~> 1.0"
 
+  spec.add_development_dependency "iodine", "~> 0.7"
   spec.add_development_dependency "rack", "~> 2.0"
   spec.add_development_dependency "websocket", "~> 1.2.4"
   spec.add_development_dependency "websocket-client-simple", "~> 0.3.0"
