@@ -1,0 +1,10 @@
+source 'https://rubygems.org'
+
+gem 'sinatra'
+gem 'sinatra-contrib'
+gem 'slim'
+
+# Litecable deps
+gem "anyway_config", "~> 1.0"
+
+gem 'iodine'
