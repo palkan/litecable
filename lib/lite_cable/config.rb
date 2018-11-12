@@ -4,7 +4,7 @@ require "anyway"
 require 'logger'
 
 module LiteCable
-  # Anycable configuration
+  # AnyCable configuration
   class Config < Anyway::Config
     require "lite_cable/coders/json"
     require "lite_cable/coders/raw"
