@@ -135,6 +135,7 @@ context 'IodineServer', :async, if: ENV['IODINE'] do
 
     after(:all) do
       Iodine.stop
+      @server.join # Iodine.stop is asynchronous, wait fot the server to shutdown.
     end
   end
 end
