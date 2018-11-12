@@ -1,8 +1,12 @@
+sudo: false
 language: ruby
 cache: bundler
 
-matrix:
-  include:
-    - rvm: 2.3.3
-    - rvm: 2.4.0
-    - IODINE=true
+rvm:
+  - 2.3.8
+  - 2.4.3
+  - 2.5.3
+
+env:
+  - IODINE=true
+  - PUMA=true
