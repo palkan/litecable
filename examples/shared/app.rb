@@ -3,10 +3,8 @@
 require "sinatra"
 require "sinatra/cookies"
 
-CABLE_URL = ENV['ANYCABLE'] ? "ws://localhost:9293/cable" : "/cable"
-
 class App < Sinatra::Application # :nodoc:
-  set :public_folder, 'assets'
+  set :public_folder, '../shared/assets'
 
   enable :sessions
   set :session_secret, 'my_secrets'

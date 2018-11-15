@@ -1,4 +1,4 @@
-# Lite Cable Sinatra Demo
+# Lite Cable + [Iodine](https://github.com/boazsegev/iodine) Sinatra Demo
 
 Sample chat application built with [Sinatra](http://www.sinatrarb.com) and Lite Cable.
 
@@ -13,7 +13,7 @@ bundle install
 Run server:
 
 ```sh
-bundle exec puma
+bundle exec iodine -p 9292
 ```
 
 Open your browser at [localhost:9292](http://localhost:9292), enter your name and a chat room ID (anything you want).

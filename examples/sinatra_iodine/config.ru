@@ -16,7 +16,15 @@ app = Rack::Builder.new do
   end
 end
 
-require "lite_cable/server"
+require "iodine"
+
+if ENV["REDIS_URL"]
+  Iodine::PubSub.default = Iodine::PubSub::Redis.new(ENV["REDIS_URL"])
+else
+  puts "* No Redis, it's okay, pub/sub will still run on the whole process cluster."
+end
+
+require "lite_cable/iodine_server"
 
 app.map '/cable' do
   use LiteCable::Server::Middleware, connection_class: Chat::Connection

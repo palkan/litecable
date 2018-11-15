@@ -2,73 +2,15 @@
 
 require "spec_helper"
 
-require "puma"
+if ENV['IODINE']
+  require 'lite_cable/iodine_server'
+  require "iodine"
+else
+  require 'lite_cable/server'
+  require "puma"
+end
 
-describe "Lite Cable server", :async do
-  module ServerTest
-    class << self
-      def logs
-        @logs ||= []
-      end
-    end
-
-    class Connection < LiteCable::Connection::Base
-      identified_by :user, :sid
-
-      def connect
-        reject_unauthorized_connection unless cookies["user"]
-        @user = cookies["user"]
-        @sid = request.params["sid"]
-      end
-
-      def disconnect
-        ServerTest.logs << "#{user} disconnected"
-      end
-    end
-
-    class EchoChannel < LiteCable::Channel::Base
-      identifier :echo
-
-      def subscribed
-        stream_from "global"
-      end
-
-      def unsubscribed
-        transmit message: "Goodbye, #{user}!"
-      end
-
-      def ding(data)
-        transmit(dong: data["message"])
-      end
-
-      def delay(data)
-        sleep 1
-        transmit(dong: data["message"])
-      end
-
-      def bulk(data)
-        LiteCable.broadcast "global", message: data["message"], from: user, sid: sid
-      end
-    end
-  end
-
-  before(:all) do
-    @server = ::Puma::Server.new(
-      LiteCable::Server::Middleware.new(nil, connection_class: ServerTest::Connection),
-      ::Puma::Events.strings
-    )
-    @server.add_tcp_listener "127.0.0.1", 3099
-    @server.min_threads = 1
-    @server.max_threads = 4
-
-    @server_t = Thread.new { @server.run.join }
-  end
-
-  after(:all) do
-    @server&.stop(true)
-    @t&.join
-  end
-
+shared_examples "Lite Cable server" do
   let(:cookies) { "user=john" }
   let(:path) { "/?sid=123" }
   let(:client) { @client = SyncClient.new("ws://127.0.0.1:3099#{path}", cookies: cookies) }
@@ -153,6 +95,47 @@ describe "Lite Cable server", :async do
       concurrently(clients) do |c|
         expect(c.read_message).to eq("identifier" => "{\"channel\":\"echo\"}", "message" => { "message" => "A-W-E-S-O-M-E", "from" => "alice", "sid" => "234" })
       end
+    end
+  end
+end
+
+context 'default Server (puma)', :async, unless: ENV['IODINE'] do
+  include_examples 'Lite Cable server' do
+    before(:all) do
+      @server = ::Puma::Server.new(
+        LiteCable::Server::Middleware.new(nil, connection_class: ServerTest::Connection),
+        ::Puma::Events.strings
+      )
+      @server.add_tcp_listener "127.0.0.1", 3099
+      @server.min_threads = 1
+      @server.max_threads = 4
+
+      @server_t = Thread.new { @server.run.join }
+    end
+
+    after(:all) do
+      @server&.stop(true)
+      @server_t&.join
+    end
+  end
+end
+
+context 'IodineServer', :async, if: ENV['IODINE'] do
+  include_examples 'Lite Cable server' do
+    before(:all) do
+      Iodine.workers = 1
+      Iodine.threads = 4
+      @server = Thread.new do
+        Iodine::Rack.run(
+          LiteCable::Server::Middleware.new(nil, connection_class: ServerTest::Connection),
+          Port: '3099', Address: '127.0.0.1'
+        )
+      end
+    end
+
+    after(:all) do
+      Iodine.stop
+      @server.join # Iodine.stop is asynchronous, wait fot the server to shutdown.
     end
   end
 end

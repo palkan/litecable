@@ -101,7 +101,27 @@ Anycable.connection_factory = MyApp::Connection
 Anycable::Server.start
 ```
 
-And then run this script along with your application. See [Sinatra example](https://github.com/palkan/litecable/tree/master/examples/sinatra) for more.
+### Using [Iodine](https://github.com/boazsegev/iodine)
+
+To use Lite Cable server:
+
+- Add `gem "iodine"` to your Gemfile
+
+- Add `require "lite_cable/iodine_server"`
+
+- Add `LiteCable::Server::Middleware` to your Rack stack, for example:
+
+```ruby
+Rack::Builder.new do
+  map '/cable' do
+    # You have to specify your app's connection class
+    use LiteCable::Server::Middleware, connection_class: App::Connection
+    run proc { |_| [200, { 'Content-Type' => 'text/plain' }, ['OK']] }
+  end
+end
+```
+
+And then run this script along with your application. See [Sinatra examples](https://github.com/palkan/litecable/tree/master/examples) for more.
 
 ### Configuration
 
@@ -126,4 +146,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/anycab
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
