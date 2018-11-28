@@ -66,7 +66,7 @@ describe "Lite Cable server", :async do
 
   after(:all) do
     @server&.stop(true)
-    @t&.join
+    @server_t&.join
   end
 
   let(:cookies) { "user=john" }
