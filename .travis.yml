@@ -11,6 +11,7 @@ matrix:
     - rvm: 2.4
     - rvm: 2.5
     - rvm: 2.6
+    - rvm: truffleruby
     - rvm: ruby-head
   allow_failures:
     - rvm: ruby-head
