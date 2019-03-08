@@ -1,0 +1,11 @@
+source 'https://rubygems.org'
+
+gem 'sinatra'
+gem 'sinatra-contrib'
+gem 'slim'
+
+gem 'puma'
+
+gem 'litecable'
+# litecable deps
+gem "websocket", "~> 1.2.4"

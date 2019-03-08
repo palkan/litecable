@@ -7,6 +7,8 @@ module LiteCable
   #
   # Inspired by https://github.com/ngauthier/tubesock/blob/master/lib/tubesock.rb
   module Server
+    # FIXME 'websocket' should be in gemspec by default - because whole
+    # litecable can't run without it
     require "websocket"
     require "lite_cable/server/subscribers_map"
     require "lite_cable/server/client_socket"

@@ -1,3 +1,4 @@
+# coding: utf-8
 # frozen_string_literal: true
 
 require "lite_cable/version"
@@ -15,7 +16,9 @@ module LiteCable
   require "lite_cable/channel"
   require "lite_cable/coders"
   require "lite_cable/config"
+  # integrations
   require "lite_cable/anycable"
+  require "lite_cable/iodine"
 
   class << self
     def config
