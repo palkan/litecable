@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
-lib = File.expand_path("../../../lib", __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-
-require './app'
-require './chat'
-
-LiteCable.config.log_level = Logger::DEBUG
+require_relative "config/environment.rb"
 
 app = Rack::Builder.new do
   map '/' do
@@ -14,11 +8,9 @@ app = Rack::Builder.new do
   end
 end
 
-if ENV['ANYCABLE']
-  # Turn AnyCable compatibility mode
-  LiteCable.anycable!
-else
-  require "lite_cable/server"
+unless ENV['ANYCABLE']
+  # Start built-in rack hijack middleware to serve websockets
+  require 'lite_cable/server'
 
   app.map '/cable' do
     use LiteCable::Server::Middleware, connection_class: Chat::Connection
