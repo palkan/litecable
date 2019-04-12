@@ -1,5 +1,4 @@
-[![Gem Version](https://badge.fury.io/rb/litecable.svg)](https://rubygems.org/gems/litecable) [![Build Status](https://travis-ci.org/palkan/litecable.svg?branch=master)](https://travis-ci.org/palkan/litecable) [![Circle CI](https://circleci.com/gh/palkan/litecable/tree/master.svg?style=svg)](https://circleci.com/gh/palkan/litecable/tree/master)
-[![Dependency Status](https://dependencyci.com/github/palkan/litecable/badge)](https://dependencyci.com/github/palkan/litecable)
+[![Gem Version](https://badge.fury.io/rb/litecable.svg)](https://rubygems.org/gems/litecable) [![Build Status](https://travis-ci.org/palkan/litecable.svg?branch=master)](https://travis-ci.org/palkan/litecable)
 
 # Lite Cable
 
