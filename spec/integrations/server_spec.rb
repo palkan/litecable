@@ -82,7 +82,7 @@ describe "Lite Cable server", :async do
     end
 
     context "when unauthorized" do
-      let(:cookies) { '' }
+      let(:cookies) { "" }
 
       it "disconnects" do
         client.wait_for_close
@@ -112,7 +112,7 @@ describe "Lite Cable server", :async do
       expect(client.read_message).to eq("identifier" => "{\"channel\":\"echo\"}", "type" => "confirm_subscription")
 
       client.send_message command: "message", identifier: JSON.generate(channel: "echo"), data: JSON.generate(action: "ding", message: "hello")
-      expect(client.read_message).to eq("identifier" => "{\"channel\":\"echo\"}", "message" => { "dong" => "hello" })
+      expect(client.read_message).to eq("identifier" => "{\"channel\":\"echo\"}", "message" => {"dong" => "hello"})
     end
 
     it "unsubscribes from channels and receive cleanup messages" do
@@ -122,7 +122,7 @@ describe "Lite Cable server", :async do
       expect(client.read_message).to eq("identifier" => "{\"channel\":\"echo\"}", "type" => "confirm_subscription")
 
       client.send_message command: "unsubscribe", identifier: JSON.generate(channel: "echo")
-      expect(client.read_message).to eq("identifier" => "{\"channel\":\"echo\"}", "message" => { "message" => "Goodbye, john!" })
+      expect(client.read_message).to eq("identifier" => "{\"channel\":\"echo\"}", "message" => {"message" => "Goodbye, john!"})
       expect(client.read_message).to eq("identifier" => "{\"channel\":\"echo\"}", "type" => "cancel_subscription")
     end
   end
@@ -145,13 +145,13 @@ describe "Lite Cable server", :async do
       client.send_message command: "message", identifier: JSON.generate(channel: "echo"), data: JSON.generate(action: "bulk", message: "Good news, everyone!")
 
       concurrently(clients) do |c|
-        expect(c.read_message).to eq("identifier" => "{\"channel\":\"echo\"}", "message" => { "message" => "Good news, everyone!", "from" => "john", "sid" => "123" })
+        expect(c.read_message).to eq("identifier" => "{\"channel\":\"echo\"}", "message" => {"message" => "Good news, everyone!", "from" => "john", "sid" => "123"})
       end
 
       client2.send_message command: "message", identifier: JSON.generate(channel: "echo"), data: JSON.generate(action: "bulk", message: "A-W-E-S-O-M-E")
 
       concurrently(clients) do |c|
-        expect(c.read_message).to eq("identifier" => "{\"channel\":\"echo\"}", "message" => { "message" => "A-W-E-S-O-M-E", "from" => "alice", "sid" => "234" })
+        expect(c.read_message).to eq("identifier" => "{\"channel\":\"echo\"}", "message" => {"message" => "A-W-E-S-O-M-E", "from" => "alice", "sid" => "234"})
       end
     end
   end

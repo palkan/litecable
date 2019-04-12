@@ -1,6 +1,8 @@
-lib = File.expand_path('../lib', __FILE__)
+# frozen_string_literal: true
+
+lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'lite_cable/version'
+require "lite_cable/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "litecable"
@@ -30,6 +32,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", ">= 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "simplecov", ">= 0.3.8"
-  spec.add_development_dependency "rubocop", "~> 0.60.0"
+  spec.add_development_dependency "rubocop", "~> 0.65.0"
+  spec.add_development_dependency "rubocop-md", "~> 0.2"
+  spec.add_development_dependency "standard", "~> 0.0.36"
   spec.add_development_dependency "pry-byebug"
 end

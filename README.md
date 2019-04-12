@@ -23,7 +23,7 @@ Compatible with [AnyCable](http://anycable.io) (for production usage).
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'litecable'
+gem "litecable"
 ```
 
 And then execute:
@@ -74,10 +74,10 @@ To use Lite Cable server:
 
 ```ruby
 Rack::Builder.new do
-  map '/cable' do
+  map "/cable" do
     # You have to specify your app's connection class
     use LiteCable::Server::Middleware, connection_class: App::Connection
-    run proc { |_| [200, { 'Content-Type' => 'text/plain' }, ['OK']] }
+    run proc { |_| [200, {"Content-Type" => "text/plain"}, ["OK"]] }
   end
 end
 ```

@@ -4,7 +4,6 @@ module LiteCable
   module Server
     module ClientSocket
       # Wrapper over web socket
-      # rubocop:disable Metrics/ClassLength
       class Base
         include Logging
         include Subscriptions
@@ -134,10 +133,6 @@ module LiteCable
           end
         end
 
-        # rubocop:disable Metrics/AbcSize
-        # rubocop:disable Metrics/CyclomaticComplexity
-        # rubocop:disable Metrics/PerceivedComplexity
-        # rubocop:disable Metrics/MethodLength
         def each_frame
           framebuffer = WebSocket::Frame::Incoming::Server.new(version: version)
 
@@ -150,7 +145,7 @@ module LiteCable
             break if data.empty?
 
             framebuffer << data
-            while frame = framebuffer.next
+            while frame = framebuffer.next # rubocop:disable Lint/AssignmentInCondition
               case frame.type
               when :close
                 return

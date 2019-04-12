@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "anyway"
-require 'logger'
+require "logger"
 
 module LiteCable
   # AnyCable configuration

@@ -11,9 +11,7 @@ class SyncClient
 
   attr_reader :pings
 
-  # rubocop: disable Metrics/AbcSize
-  # rubocop: disable Metrics/PerceivedComplexity
-  def initialize(url, cookies: '')
+  def initialize(url, cookies: "")
     messages = @messages = Queue.new
     closed = @closed = Concurrent::Event.new
     has_messages = @has_messages = Concurrent::Semaphore.new(0)
@@ -24,7 +22,7 @@ class SyncClient
     @ws = WebSocket::Client::Simple.connect(
       url,
       headers: {
-        'COOKIE' => cookies
+        "COOKIE" => cookies
       }
     ) do |ws|
       ws.on(:error) do |event|

@@ -3,15 +3,15 @@
 require "sinatra"
 require "sinatra/cookies"
 
-CABLE_URL = ENV['ANYCABLE'] ? "ws://localhost:9293/cable" : "/cable"
+CABLE_URL = ENV["ANYCABLE"] ? "ws://localhost:9293/cable" : "/cable"
 
 class App < Sinatra::Application # :nodoc:
-  set :public_folder, 'assets'
+  set :public_folder, "assets"
 
   enable :sessions
-  set :session_secret, 'my_secrets'
+  set :session_secret, "my_secrets"
 
-  get '/' do
+  get "/" do
     if session[:user]
       slim :index
     else
@@ -19,31 +19,31 @@ class App < Sinatra::Application # :nodoc:
     end
   end
 
-  get '/sign_in' do
+  get "/sign_in" do
     slim :login
   end
 
-  post '/sign_in' do
-    if params['user']
-      session[:user] = params['user']
-      cookies["user"] = params['user']
-      redirect '/'
+  post "/sign_in" do
+    if params["user"]
+      session[:user] = params["user"]
+      cookies["user"] = params["user"]
+      redirect "/"
     else
       slim :login
     end
   end
 
-  post '/rooms' do
-    if params['id']
-      redirect "/rooms/#{params['id']}"
+  post "/rooms" do
+    if params["id"]
+      redirect "/rooms/#{params["id"]}"
     else
       slim :index
     end
   end
 
-  get '/rooms/:id' do
+  get "/rooms/:id" do
     if session[:user]
-      @room_id = params['id']
+      @room_id = params["id"]
       @user = session[:user]
       slim :room
     else

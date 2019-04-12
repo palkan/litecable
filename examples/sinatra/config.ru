@@ -3,18 +3,18 @@
 require_relative "config/environment.rb"
 
 app = Rack::Builder.new do
-  map '/' do
+  map "/" do
     run App
   end
 end
 
-unless ENV['ANYCABLE']
+unless ENV["ANYCABLE"]
   # Start built-in rack hijack middleware to serve websockets
-  require 'lite_cable/server'
+  require "lite_cable/server"
 
-  app.map '/cable' do
+  app.map "/cable" do
     use LiteCable::Server::Middleware, connection_class: Chat::Connection
-    run proc { |_| [200, { 'Content-Type' => 'text/plain' }, ['OK']] }
+    run(proc { |_| [200, {"Content-Type" => "text/plain"}, ["OK"]] })
   end
 end
 

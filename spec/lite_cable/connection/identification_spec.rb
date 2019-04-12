@@ -27,7 +27,7 @@ end
 
 describe TestIdentificationConnection do
   let(:cookies) { "user=john;" }
-  let(:socket_params) { { env: { "HTTP_COOKIE" => cookies } } }
+  let(:socket_params) { {env: {"HTTP_COOKIE" => cookies}} }
   let(:socket) { TestSocket.new(socket_params) }
 
   subject do
@@ -78,7 +78,7 @@ describe TestIdentificationConnection do
   context "with encoded_identifiers" do
     prepend_before { allow(LiteCable.config).to receive(:identifier_coder).and_return(CustomIdCoder) }
 
-    let(:identifiers) { { "user" => "kcaj", "john" => false }.to_json }
+    let(:identifiers) { {"user" => "kcaj", "john" => false}.to_json }
 
     subject { described_class.new(socket, identifiers: identifiers) }
 

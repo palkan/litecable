@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'logger'
+require "logger"
 
 module LiteCable
   module Logging # :nodoc:

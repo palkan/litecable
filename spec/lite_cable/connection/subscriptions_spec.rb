@@ -35,27 +35,27 @@ describe LiteCable::Connection::Subscriptions do
 
   describe "#add" do
     it "creates channel", :aggregate_failures do
-      id = { channel: "subscription_test" }.to_json
+      id = {channel: "subscription_test"}.to_json
       channel = subject.add(id)
       expect(channel).to be_subscribed
       expect(subject.identifiers).to include(id)
     end
 
     it "sends confirmation" do
-      id = { channel: "subscription_test" }.to_json
+      id = {channel: "subscription_test"}.to_json
       expect { subject.add(id) }.to change(socket.transmissions, :size).by(1)
       expect(socket.last_transmission).to eq("identifier" => id, "type" => "confirm_subscription")
     end
 
     it "handles params and identifier", :aggregate_failures do
-      id = { channel: "subscription_test", id: 1, type: "test" }.to_json
+      id = {channel: "subscription_test", id: 1, type: "test"}.to_json
       channel = subject.add(id)
       expect(channel.identifier).to eq id
       expect(channel.params).to eq("id" => 1, "type" => "test")
     end
 
     it "handles rejection", :aggregate_failures do
-      id = { channel: "subscription_test", reject: true }.to_json
+      id = {channel: "subscription_test", reject: true}.to_json
       channel = subject.add(id)
       expect(channel).to be_nil
       expect(subject.identifiers).not_to include(id)
@@ -64,7 +64,7 @@ describe LiteCable::Connection::Subscriptions do
   end
 
   describe "#remove" do
-    let(:id) { { channel: "subscription_test" }.to_json }
+    let(:id) { {channel: "subscription_test"}.to_json }
     let!(:channel) { subject.add(id) }
 
     it "removes subscription and send cancel confirmation", :aggregate_failures do
@@ -76,8 +76,8 @@ describe LiteCable::Connection::Subscriptions do
   end
 
   describe "#remove_all" do
-    let(:id) { { channel: "subscription_test" }.to_json }
-    let(:id2) { { channel: "subscription_test2" }.to_json }
+    let(:id) { {channel: "subscription_test"}.to_json }
+    let(:id2) { {channel: "subscription_test2"}.to_json }
 
     let(:channel) { subject.add(id) }
     let(:channel2) { subject.add(id2) }
@@ -106,7 +106,7 @@ describe LiteCable::Connection::Subscriptions do
       channel = double("channel")
       expect(subject).to receive(:find).with("subscription_test").and_return(channel)
       expect(channel).to receive(:handle_action).with('{"action":"test"}')
-      subject.execute_command("command" => "message", "identifier" => "subscription_test", "data" => { action: "test" }.to_json)
+      subject.execute_command("command" => "message", "identifier" => "subscription_test", "data" => {action: "test"}.to_json)
     end
 
     it "raises error on unknown command error" do

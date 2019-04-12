@@ -7,12 +7,12 @@ module LiteCable
       module Subscriptions
         def subscribe(channel, broadcasting)
           LiteCable::Server.subscribers_map
-                           .add_subscriber(broadcasting, self, channel)
+            .add_subscriber(broadcasting, self, channel)
         end
 
         def unsubscribe(channel, broadcasting)
           LiteCable::Server.subscribers_map
-                           .remove_subscriber(broadcasting, self, channel)
+            .remove_subscriber(broadcasting, self, channel)
         end
 
         def unsubscribe_from_all(channel)

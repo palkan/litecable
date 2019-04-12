@@ -1,78 +1,53 @@
+require:
+  - standard/cop/semantic_blocks
+  - rubocop-md
+
+inherit_gem:
+  standard: config/base.yml
+
 AllCops:
-  # Include gemspec and Rakefile
-  Include:
-    - 'lib/**/*.rb'
-    - 'lib/**/*.rake'
-    - 'spec/**/*.rb'
   Exclude:
-    - 'bin/**/*'
-    - 'spec/dummy/**/*'
+    - 'bin/*'
     - 'tmp/**/*'
-    - 'bench/**/*'
-    - 'lib/anycable/rpc/**/*'
+    - 'Gemfile'
     - 'vendor/**/*'
     - 'gemfiles/**/*'
-    - 'Gemfile'
-    - 'Rakefile'
-    - 'examples/**/*'
-    - '*.gemspec'
   DisplayCopNames: true
-  StyleGuideCopsOnly: false
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.4
 
-Naming/AccessorMethodName:
+Standard/SemanticBlocks:
   Enabled: false
 
-Style/TrivialAccessors:
-  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: true
 
-Style/Documentation:
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: no_comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: no_comma
+
+Layout/AlignParameters:
+  EnforcedStyle: with_first_parameter
+
+Lint/Void:
   Exclude:
-    - 'spec/**/*.rb'
+    - '**/*.md'
 
-Style/ParallelAssignment:
-  Enabled: false
-
-Style/StringLiterals:
-  Enabled: false
-
-Layout/SpaceInsideStringInterpolation:
-  EnforcedStyle: no_space
-
-Style/BlockDelimiters:
+# See https://github.com/rubocop-hq/rubocop/issues/4222
+Lint/AmbiguousBlockAssociation:
   Exclude:
-    - 'spec/**/*.rb'
+    - 'spec/**/*'
+    - '**/*.md'
 
-Style/NumericPredicate:
-  Enabled: false
-
-Lint/AmbiguousRegexpLiteral:
-  Enabled: false
-
-Lint/AssignmentInCondition:
-  Enabled: false
-
-Lint/MissingCopEnableDirective:
-  Enabled: false
-
-Metrics/MethodLength:
+Lint/DuplicateMethods:
   Exclude:
-    - 'spec/**/*.rb'
+    - '**/*.md'
 
-Metrics/AbcSize:
-  Max: 20
-
-Metrics/LineLength:
-  Max: 100
+Naming/FileName:
   Exclude:
-    - 'spec/**/*.rb'
+   - '**/*.md'
 
-Metrics/BlockLength:
+Layout/InitialIndentation:
   Exclude:
-    - 'spec/**/*.rb'
-
-Rails/Date:
-  Enabled: false
-
-Rails/TimeZone:
-  Enabled: false
+    - 'CHANGELOG.md'

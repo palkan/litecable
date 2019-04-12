@@ -12,15 +12,15 @@ module LiteCable
       end
 
       def call(env)
-        return [404, { 'Content-Type' => 'text/plain' }, ['Not Found']] unless
-          env["HTTP_UPGRADE"] == 'websocket'
+        return [404, {"Content-Type" => "text/plain"}, ["Not Found"]] unless
+          env["HTTP_UPGRADE"] == "websocket"
 
-        raise HijackNotAvailable unless env['rack.hijack']
+        raise HijackNotAvailable unless env["rack.hijack"]
 
-        env['rack.hijack'].call
+        env["rack.hijack"].call
         handshake = send_handshake(env)
 
-        socket = ClientSocket::Base.new env, env['rack.hijack_io'], handshake.version
+        socket = ClientSocket::Base.new env, env["rack.hijack_io"], handshake.version
         init_connection socket
         init_heartbeat socket
         socket.listen
@@ -35,7 +35,7 @@ module LiteCable
         )
 
         handshake.from_rack env
-        env['rack.hijack_io'].write handshake.to_s
+        env["rack.hijack_io"].write handshake.to_s
         handshake
       end
 

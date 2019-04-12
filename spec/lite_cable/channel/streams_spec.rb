@@ -10,11 +10,11 @@ class TestStreamsChannel < LiteCable::Channel::Base
   end
 
   def follow(data)
-    stream_from "chat_#{data['id']}"
+    stream_from "chat_#{data["id"]}"
   end
 
   def unfollow(data)
-    stop_stream "chat_#{data['id']}"
+    stop_stream "chat_#{data["id"]}"
   end
 
   def stop_all_streams
@@ -26,7 +26,7 @@ end
 describe TestStreamsChannel do
   let(:user) { "john" }
   let(:socket) { TestSocket.new }
-  let(:connection) { TestConnection.new(socket, identifiers: { "user" => user }.to_json) }
+  let(:connection) { TestConnection.new(socket, identifiers: {"user" => user}.to_json) }
   let(:params) { {} }
 
   subject { described_class.new(connection, "test", params) }
@@ -40,10 +40,10 @@ describe TestStreamsChannel do
 
   describe "#stop_stream" do
     it "unsubscribes channel from stream", :aggregate_failures do
-      subject.handle_action({ "action" => "follow", "id" => 1 }.to_json)
+      subject.handle_action({"action" => "follow", "id" => 1}.to_json)
       expect(socket.streams["test"]).to eq(["chat_1"])
 
-      subject.handle_action({ "action" => "unfollow", "id" => 1 }.to_json)
+      subject.handle_action({"action" => "unfollow", "id" => 1}.to_json)
       expect(socket.streams["test"]).to eq([])
     end
   end

@@ -46,7 +46,7 @@ module LiteCable
       private
 
       def ping_message(time)
-        { type: LiteCable::INTERNAL[:message_types][:ping], message: time }.to_json
+        {type: LiteCable::INTERNAL[:message_types][:ping], message: time}.to_json
       end
     end
   end

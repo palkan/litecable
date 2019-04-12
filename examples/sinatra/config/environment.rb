@@ -8,7 +8,7 @@ require_relative "../chat"
 
 LiteCable.config.log_level = Logger::DEBUG
 
-if ENV['ANYCABLE']
+if ENV["ANYCABLE"]
   require "anycable"
 
   # Turn AnyCable compatibility mode

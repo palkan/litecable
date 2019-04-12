@@ -1,5 +1,9 @@
 # Change log
 
+## 0.5.0 (2019-04-12) 🚀
+
+- Drop Ruby 2.3 support ([@palkan][])
+
 ## 0.4.1 (2017-02-04)
 
 - Use `websocket-ruby` with subprotocols support ([@palkan][])

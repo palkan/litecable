@@ -1,12 +1,14 @@
-source 'https://rubygems.org'
+# frozen_string_literal: true
 
-gem 'sinatra'
-gem 'sinatra-contrib'
-gem 'slim'
+source "https://rubygems.org"
 
-gem 'puma'
+gem "sinatra"
+gem "sinatra-contrib"
+gem "slim"
 
-gem 'pry-byebug'
+gem "puma"
+
+gem "pry-byebug"
 
 # litecable deps
 gem "anyway_config", "~> 1.0"
