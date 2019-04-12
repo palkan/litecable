@@ -8,15 +8,17 @@ Gem::Specification.new do |spec|
   spec.authors       = ["palkan"]
   spec.email         = ["dementiev.vm@gmail.com"]
 
-  spec.summary       = %q{Fat-free ActionCable implementation}
-  spec.description   = %q{Fat-free ActionCable implementation for using with AnyCable (and without Rails)}
-  spec.homepage      = "https://github.com/anycable/litecable"
+  spec.summary       = "Fat-free ActionCable implementation"
+  spec.description   = "Fat-free ActionCable implementation for using with AnyCable (and without Rails)"
+  spec.homepage      = "https://github.com/palkan/litecable"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "anyway_config", "~> 1.0"
+  spec.required_ruby_version = ">= 2.4.0"
+
+  spec.add_dependency "anyway_config", ">= 1.0"
 
   spec.add_development_dependency "rack", "~> 2.0"
   spec.add_development_dependency "websocket", "~> 1.2.4"
