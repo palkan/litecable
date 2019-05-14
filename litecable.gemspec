@@ -14,6 +14,13 @@ Gem::Specification.new do |spec|
   spec.description   = "Fat-free ActionCable implementation for using with AnyCable (and without Rails)"
   spec.homepage      = "https://github.com/palkan/litecable"
   spec.license       = "MIT"
+  spec.metadata = {
+    "bug_tracker_uri" => "http://github.com/palkan/litecable/issues",
+    "changelog_uri" => "https://github.com/palkan/litecable/blob/master/CHANGELOG.md",
+    "documentation_uri" => "http://github.com/palkan/litecable",
+    "homepage_uri" => "http://github.com/palkan/litecable",
+    "source_code_uri" => "http://github.com/palkan/litecable"
+  }
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.require_paths = ["lib"]
