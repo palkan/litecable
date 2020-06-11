@@ -6,8 +6,7 @@ module LiteCable # :nodoc:
     module Broadcasting # :nodoc:
       def broadcast(stream, message, coder: nil)
         coder ||= LiteCable.config.coder
-        # FIXME: after anycable 0.6.0 release
-        Anycable.broadcast stream, coder.encode(message)
+        ::AnyCable.broadcast stream, coder.encode(message)
       end
     end
 

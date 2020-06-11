@@ -1,5 +1,7 @@
 # Change log
 
+- Drop Ruby 2.4 support ([palkan][])
+
 ## 0.6.0 (2019-04-12) 🚀
 
 - Drop Ruby 2.3 support ([@palkan][])
