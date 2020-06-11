@@ -129,7 +129,7 @@ See [config](https://github.com/palkan/litecable/blob/master/lib/lite_cable/conf
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at [https://github.com/anycable/litecable](https://github.com/anycable/litecable).
+Bug reports and pull requests are welcome on GitHub at [https://github.com/palkan/litecable](https://github.com/palkan/litecable).
 
 ## License
 

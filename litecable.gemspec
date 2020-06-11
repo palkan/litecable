@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-lib = File.expand_path("../lib", __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "lite_cable/version"
+require_relative "lib/lite_cable/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "litecable"
@@ -22,7 +20,7 @@ Gem::Specification.new do |spec|
     "source_code_uri" => "http://github.com/palkan/litecable"
   }
 
-  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  spec.files = Dir.glob("lib/**/*") + %w[README.md LICENSE.txt CHANGELOG.md]
   spec.require_paths = ["lib"]
 
   spec.required_ruby_version = ">= 2.5.0"
