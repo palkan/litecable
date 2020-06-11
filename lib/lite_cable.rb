@@ -15,6 +15,7 @@ module LiteCable
   require "lite_cable/channel"
   require "lite_cable/coders"
   require "lite_cable/config"
+  require "lite_cable/broadcast_adapters"
   require "lite_cable/anycable"
 
   class << self
@@ -23,8 +24,27 @@ module LiteCable
     end
 
     # Broadcast encoded message to the stream
-    def broadcast(*args)
-      LiteCable::Server.broadcast(*args)
+    def broadcast(stream, message, coder: LiteCable.config.coder)
+      broadcast_adapter.broadcast(stream, message, coder: coder)
+    end
+
+    def broadcast_adapter
+      return @broadcast_adapter if defined?(@broadcast_adapter)
+      self.broadcast_adapter = LiteCable.config.broadcast_adapter.to_sym
+      @broadcast_adapter
+    end
+
+    def broadcast_adapter=(adapter)
+      if adapter.is_a?(Symbol) || adapter.is_a?(Array)
+        adapter = BroadcastAdapters.lookup_adapter(adapter)
+      end
+
+      unless adapter.respond_to?(:broadcast)
+        raise ArgumentError, "BroadcastAdapter must implement #broadcast method. " \
+                              "#{adapter.class} doesn't implement it."
+      end
+
+      @broadcast_adapter = adapter
     end
   end
 end

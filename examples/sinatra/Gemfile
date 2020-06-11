@@ -11,9 +11,10 @@ gem "puma"
 gem "pry-byebug"
 
 # litecable deps
-gem "anyway_config", "~> 1.0"
+gem "litecable", path: "../../"
+
+# For Rack/Puma server
 gem "websocket", "~> 1.2.4"
 
-# anycable
-gem "anycable", "~> 0.6.0"
-gem "redis"
+# For AnyCable
+gem "anycable", "1.0.0.rc1"

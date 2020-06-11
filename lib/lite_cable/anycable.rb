@@ -3,13 +3,6 @@
 module LiteCable # :nodoc:
   # AnyCable extensions
   module AnyCable
-    module Broadcasting # :nodoc:
-      def broadcast(stream, message, coder: nil)
-        coder ||= LiteCable.config.coder
-        ::AnyCable.broadcast stream, coder.encode(message)
-      end
-    end
-
     module Connection # :nodoc:
       def self.extended(base)
         base.prepend InstanceMethods
@@ -18,9 +11,6 @@ module LiteCable # :nodoc:
       def call(socket, **options)
         new(socket, options)
       end
-
-      # Backward compatibility with AnyCable <= 0.4
-      alias create call
 
       module InstanceMethods # :nodoc:
         def initialize(socket, subscriptions: nil, **hargs)
@@ -63,6 +53,19 @@ module LiteCable # :nodoc:
   # Patch Lite Cable with AnyCable functionality
   def self.anycable!
     LiteCable::Connection::Base.extend LiteCable::AnyCable::Connection
-    LiteCable.singleton_class.prepend LiteCable::AnyCable::Broadcasting
+  end
+end
+
+if defined?(AnyCable)
+  AnyCable.configure_server do
+    # Make sure broadcast adapter is valid
+    require "lite_cable/broadcast_adapters/any_cable"
+    unless LiteCable::BroadcastAdapters::AnyCable === LiteCable.broadcast_adapter
+      raise "You should use :any_cable broadcast adapter (current: #{LiteCable.broadcast_adapter.class}). " \
+            "Set it via LITECABLE_BROADCAST_ADAPTER=any_cable or in the code/YML."
+    end
+
+    # Turn AnyCable compatibility mode for anycable RPC server automatically
+    LiteCable.anycable!
   end
 end

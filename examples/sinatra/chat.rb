@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "litecable"
+require "anycable"
 
 # Sample chat application
 module Chat
@@ -8,14 +9,14 @@ module Chat
     identified_by :user, :sid
 
     def connect
-      @user = cookies["user"]
-      @sid = request.params["sid"]
-      # reject_unauthorized_connection unless @user
-      $stdout.puts "#{@user} connected"
+      self.user = cookies["user"]
+      self.sid = request.params["sid"]
+      reject_unauthorized_connection unless user
+      $stdout.puts "#{user} connected"
     end
 
     def disconnect
-      $stdout.puts "#{@user} disconnected"
+      $stdout.puts "#{user} disconnected"
     end
   end
 

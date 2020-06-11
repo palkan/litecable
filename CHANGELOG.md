@@ -1,5 +1,20 @@
 # Change log
 
+- Refactor AnyCable integration ([@palkan][])
+
+Now you only need to set AnyCable broadcast adapter:
+
+```ruby
+LiteCable.broadcast_adapter = :any_cable
+```
+
+```sh
+# or via env/config
+LITECABLE_BROADCAST_ADAPTER=any_cable ruby my_app.rb
+```
+
+- Adapterize broadcast adapters ([@palkan][])
+
 - Drop Ruby 2.4 support ([palkan][])
 
 ## 0.6.0 (2019-04-12) 🚀

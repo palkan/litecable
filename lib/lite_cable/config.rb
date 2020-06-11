@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "anyway"
+require "anyway_config"
 require "logger"
 
 module LiteCable
@@ -13,6 +13,7 @@ module LiteCable
 
     attr_config :logger,
                 coder: Coders::JSON,
+                broadcast_adapter: :memory,
                 identifier_coder: Coders::Raw,
                 log_level: Logger::INFO
   end

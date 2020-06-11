@@ -1,4 +1,5 @@
-[![Gem Version](https://badge.fury.io/rb/litecable.svg)](https://rubygems.org/gems/litecable) [![Build Status](https://travis-ci.org/palkan/litecable.svg?branch=master)](https://travis-ci.org/palkan/litecable)
+[![Gem Version](https://badge.fury.io/rb/litecable.svg)](https://rubygems.org/gems/litecable)
+[![Build Status](https://travis-ci.org/palkan/litecable.svg?branch=master)](https://travis-ci.org/palkan/litecable)
 
 # Lite Cable
 
@@ -83,24 +84,32 @@ end
 
 ### Using with AnyCable
 
-Lite Cable is AnyCable-compatible out-of-the-box. You should write a simple server script:
+Lite Cable is AnyCable-compatible out-of-the-box:
+
+1. Set broadcast adapter to AnyCable:
 
 ```ruby
-#!/usr/bin/env ruby
-
-require "my_app"
-require "rack"
-require "anycable"
-
-# Turn AnyCable compatibility mode
-LiteCable.anycable!
-
-Anycable.connection_factory = MyApp::Connection
-
-Anycable::Server.start
+LiteCable.broadcast_adapter = :any_cable
 ```
 
-And then run this script along with your application. See [Sinatra example](https://github.com/palkan/litecable/tree/master/examples/sinatra) for more.
+You can also do this via configuration, e.g., env var (`LITECABLE_BROADCAST_ADAPTER=any_cable`) or `broadcast_adapter: any_cable` in a YAML config.
+
+2. Configure connection factory:
+
+```ruby
+AnyCable.connection_factory = MyApp::Connection
+```
+
+Then run AnyCable alongs with the app:
+
+```sh
+bundle exec anycable
+
+# add -r option to load the app if it's not ./config/anycable.rb or ./config/environment.rb
+bundle exec anycable -r ./my_app.rb
+```
+
+See [Sinatra example](https://github.com/palkan/litecable/tree/master/examples/sinatra) for more.
 
 ### Configuration
 
@@ -120,9 +129,8 @@ See [config](https://github.com/palkan/litecable/blob/master/lib/lite_cable/conf
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/anycable/litecable.
+Bug reports and pull requests are welcome on GitHub at [https://github.com/anycable/litecable](https://github.com/anycable/litecable).
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-

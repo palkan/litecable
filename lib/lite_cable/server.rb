@@ -15,12 +15,6 @@ module LiteCable
 
     class << self
       attr_accessor :subscribers_map
-
-      # Broadcast encoded message to the stream
-      def broadcast(stream, message, coder: nil)
-        coder ||= LiteCable.config.coder
-        subscribers_map.broadcast stream, message, coder
-      end
     end
 
     self.subscribers_map = SubscribersMap.new
