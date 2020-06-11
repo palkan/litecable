@@ -53,9 +53,9 @@ module LiteCable
       def execute_command(data)
         command = data.delete("command")
         case command
-        when "subscribe"   then add(data["identifier"])
+        when "subscribe" then add(data["identifier"])
         when "unsubscribe" then remove(data["identifier"])
-        when "message"     then perform_action(data["identifier"], data["data"])
+        when "message" then perform_action(data["identifier"], data["data"])
         else
           raise UnknownCommandError, "Command not found #{command}"
         end

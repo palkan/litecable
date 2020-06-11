@@ -1,5 +1,5 @@
 [![Gem Version](https://badge.fury.io/rb/litecable.svg)](https://rubygems.org/gems/litecable)
-[![Build Status](https://travis-ci.org/palkan/litecable.svg?branch=master)](https://travis-ci.org/palkan/litecable)
+[![Build](https://github.com/palkan/litecable/workflows/Build/badge.svg)](https://github.com/palkan/litecable/actions)
 
 # Lite Cable
 
@@ -26,17 +26,11 @@ Add this line to your application's Gemfile:
 gem "litecable"
 ```
 
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install litecable
+And run `bundle install`.
 
 ## Usage
 
-Please, checkout [Action Cable guides](http://guides.rubyonrails.org/action_cable_overview.html) for general information. Lite Cable aims to be compatible with Action Cable as much as possible without the loss of simplicity and _ligthness_.
+Please, checkout [Action Cable guides](http://guides.rubyonrails.org/action_cable_overview.html) for general information. Lite Cable aims to be compatible with Action Cable as much as possible without the loss of simplicity and _lightness_.
 
 You can use Action Cable javascript client without any change (precompiled version can be found [here](https://github.com/palkan/litecable/tree/master/examples/sinatra/assets/cable.js)).
 
@@ -86,7 +80,7 @@ end
 
 Lite Cable is AnyCable-compatible out-of-the-box:
 
-1. Set broadcast adapter to AnyCable:
+- Set broadcast adapter to AnyCable:
 
 ```ruby
 LiteCable.broadcast_adapter = :any_cable
@@ -94,13 +88,13 @@ LiteCable.broadcast_adapter = :any_cable
 
 You can also do this via configuration, e.g., env var (`LITECABLE_BROADCAST_ADAPTER=any_cable`) or `broadcast_adapter: any_cable` in a YAML config.
 
-2. Configure connection factory:
+- Configure connection factory:
 
 ```ruby
 AnyCable.connection_factory = MyApp::Connection
 ```
 
-Then run AnyCable alongs with the app:
+Then run AnyCable along with the app:
 
 ```sh
 bundle exec anycable
@@ -133,4 +127,4 @@ Bug reports and pull requests are welcome on GitHub at [https://github.com/palka
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+The gem is available as open source under the terms of the [MIT License](./LICENSE.txt).

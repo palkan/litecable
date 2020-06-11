@@ -27,7 +27,7 @@ LITECABLE_BROADCAST_ADAPTER=any_cable ruby my_app.rb
 
 ## 0.4.1 (2017-02-04)
 
-- Use `websocket-ruby` with subprotocols support ([@palkan][])
+- Use `websocket-ruby` with sub-protocols support ([@palkan][])
 
 ## 0.4.0 (2017-01-29)
 

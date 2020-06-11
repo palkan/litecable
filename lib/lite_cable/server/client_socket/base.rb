@@ -17,10 +17,10 @@ module LiteCable
           @version = version
           @active = true
 
-          @open_handlers    = []
+          @open_handlers = []
           @message_handlers = []
-          @close_handlers   = []
-          @error_handlers   = []
+          @close_handlers = []
+          @error_handlers = []
 
           @close_on_error = true
         end

@@ -12,9 +12,9 @@ module LiteCable
     config_name :litecable
 
     attr_config :logger,
-                coder: Coders::JSON,
-                broadcast_adapter: :memory,
-                identifier_coder: Coders::Raw,
-                log_level: Logger::INFO
+      coder: Coders::JSON,
+      broadcast_adapter: :memory,
+      identifier_coder: Coders::Raw,
+      log_level: Logger::INFO
   end
 end
