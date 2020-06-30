@@ -1,5 +1,7 @@
 # Change log
 
+## 0.7.0 (2020-01-07)
+
 - Refactor AnyCable integration ([@palkan][])
 
 Now you only need to set AnyCable broadcast adapter:
