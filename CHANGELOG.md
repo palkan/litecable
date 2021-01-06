@@ -1,5 +1,11 @@
 # Change log
 
+## master (unreleased)
+
+## 0.7.1 (2021-01-06)
+
+- Fix handling client disconnection during socket write. ([@palkan][])
+
 ## 0.7.0 (2020-01-07)
 
 - Refactor AnyCable integration ([@palkan][])
