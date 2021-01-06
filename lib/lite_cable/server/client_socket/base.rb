@@ -36,6 +36,9 @@ module LiteCable
             type: type
           )
           socket.write frame.to_s
+        rescue EOFError, Errno::ECONNRESET => e
+          log(:debug, "Socket gone: #{e}")
+          close
         rescue IOError, Errno::EPIPE, Errno::ETIMEDOUT => e
           log(:error, "Socket send failed: #{e}")
           close
