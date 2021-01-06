@@ -16,7 +16,7 @@ end
 
 describe TestBaseConnection do
   let(:socket_params) { {} }
-  let(:socket) { TestSocket.new(socket_params) }
+  let(:socket) { TestSocket.new(**socket_params) }
 
   subject { described_class.new(socket) }
 

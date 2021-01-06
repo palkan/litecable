@@ -14,7 +14,7 @@ end
 describe TestAuthorizationConnection do
   let(:cookies) { "" }
   let(:socket_params) { {env: {"HTTP_COOKIE" => cookies}} }
-  let(:socket) { TestSocket.new(socket_params) }
+  let(:socket) { TestSocket.new(**socket_params) }
 
   subject { described_class.new(socket) }
 

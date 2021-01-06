@@ -28,7 +28,7 @@ end
 describe TestIdentificationConnection do
   let(:cookies) { "user=john;" }
   let(:socket_params) { {env: {"HTTP_COOKIE" => cookies}} }
-  let(:socket) { TestSocket.new(socket_params) }
+  let(:socket) { TestSocket.new(**socket_params) }
 
   subject do
     described_class.new(socket).tap(&:handle_open)

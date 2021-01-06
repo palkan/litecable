@@ -2,13 +2,6 @@
 
 require "pry-byebug"
 
-if ENV["COVER"]
-  require "simplecov"
-  SimpleCov.root File.join(File.dirname(__FILE__), "..")
-  SimpleCov.add_filter "/spec/"
-  SimpleCov.start
-end
-
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require "lite_cable"
 require "lite_cable/server"
