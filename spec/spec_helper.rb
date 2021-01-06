@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
-require "pry-byebug"
+begin
+  require "pry-byebug"
+rescue LoadError
+end
 
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require "lite_cable"
