@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module LiteCable
-  # rubocop:disable Metrics/LineLength
   module Connection
     # A Connection object represents a client "connected" to the application.
     # It contains all of the channel subscriptions. Incoming messages are then routed to these channel subscriptions
@@ -38,7 +37,6 @@ module LiteCable
     # it easy to use cookies that were set when logging in via a web interface to authorize the connection.
     #
     class Base
-      # rubocop:enable Metrics/LineLength
       include Authorization
       prepend Identification
       include Logging

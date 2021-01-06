@@ -21,7 +21,7 @@ class CustomIdCoder
       end
     end
 
-    alias decode encode
+    alias_method :decode, :encode
   end
 end
 

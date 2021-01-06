@@ -13,7 +13,7 @@ module LiteCable
         @logger = LiteCable.config.logger
         return if @logger == false
 
-        @logger ||= ::Logger.new(STDERR).tap do |logger|
+        @logger ||= ::Logger.new($stderr).tap do |logger|
           logger.level = LiteCable.config.log_level
         end
       end

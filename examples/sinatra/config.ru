@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "config/environment.rb"
+require_relative "config/environment"
 
 app = Rack::Builder.new do
   map "/" do

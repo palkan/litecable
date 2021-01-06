@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module LiteCable
-  # rubocop:disable Metrics/LineLength
   module Channel
     # Streams allow channels to route broadcastings to the subscriber. A broadcasting is a pubsub queue where any data
     # placed into it is automatically sent to the clients that are connected at that time.
@@ -29,7 +28,6 @@ module LiteCable
     #
     # You can stop streaming from all broadcasts by calling #stop_all_streams or use #stop_from to stop streaming broadcasts from the specified stream.
     module Streams
-      # rubocop:enable Metrics/LineLength
       def handle_unsubscribe
         stop_all_streams
         super

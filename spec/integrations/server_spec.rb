@@ -5,7 +5,7 @@ require "spec_helper"
 require "puma"
 
 describe "Lite Cable server", :async do
-  module ServerTest
+  module ServerTest # rubocop:disable Lint/ConstantDefinitionInBlock
     class << self
       def logs
         @logs ||= []

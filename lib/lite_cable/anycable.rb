@@ -39,8 +39,8 @@ module LiteCable # :nodoc:
             false
           end
         rescue LiteCable::Connection::Subscriptions::Error,
-               LiteCable::Channel::Error,
-               LiteCable::Channel::Registry::Error => e
+          LiteCable::Channel::Error,
+          LiteCable::Channel::Registry::Error => e
           log(:error, log_fmt("Connection command failed: #{e}"))
           close
           false

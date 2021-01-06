@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 module LiteCable
-  # rubocop:disable Metrics/LineLength
   module Channel
     class Error < StandardError; end
+
     class RejectedError < Error; end
+
     class UnproccessableActionError < Error; end
 
     # The channel provides the basic structure of grouping behavior into logical units when communicating over the connection.
@@ -63,7 +64,6 @@ module LiteCable
     # client-side, the <tt>Channel#rejected</tt> callback will get invoked when
     # the server rejects the subscription request.
     class Base
-      # rubocop:enable Metrics/LineLength
       class << self
         # A set of method names that should be considered actions.
         # This includes all public instance methods on a channel except from Channel::Base methods.

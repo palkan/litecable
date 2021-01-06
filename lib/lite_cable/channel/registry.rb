@@ -5,7 +5,9 @@ module LiteCable
     # Stores channels identifiers and corresponding classes.
     module Registry
       class Error < StandardError; end
+
       class AlreadyRegisteredError < Error; end
+
       class UnknownChannelError < Error; end
 
       class << self

@@ -9,7 +9,7 @@ module LiteCable
           val
         end
 
-        alias encode decode
+        alias_method :encode, :decode
       end
     end
   end

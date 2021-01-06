@@ -5,8 +5,11 @@ module LiteCable
     # Manage the connection channels and route messages
     class Subscriptions
       class Error < StandardError; end
+
       class AlreadySubscribedError < Error; end
+
       class UnknownCommandError < Error; end
+
       class ChannelNotFoundError < Error; end
 
       include Logging
