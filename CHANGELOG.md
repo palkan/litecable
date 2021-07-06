@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+## 0.7.2 (2021-07-06)
+
+- Fixed Ruby 3.0.1 compatibility.
+
 ## 0.7.1 (2021-01-06)
 
 - Fix handling client disconnection during socket write. ([@palkan][])
