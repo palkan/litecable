@@ -13,6 +13,7 @@ jobs:
       BUNDLE_JOBS: 4
       BUNDLE_RETRY: 3
       BUNDLE_FORCE_RUBY_PLATFORM: 1
+      BUNDLE_GEMFILE: ${{ matrix.gemfile }}
       CI: true
     strategy:
       fail-fast: false
@@ -20,21 +21,11 @@ jobs:
         ruby: ["2.5", "2.6", "2.7", "3.0", "truffleruby"]
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/cache@v1
-      with:
-        path: /home/runner/bundle
-        key: bundle-${{ matrix.ruby }}-${{ hashFiles('**/*.gemspec') }}-${{ hashFiles('**/Gemfile') }}
-        restore-keys: |
-          bundle-${{ matrix.ruby }}-
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
-    - name: Bundle install
-      run: |
-        bundle config path /home/runner/bundle
-        bundle config --global gemfile ${{ matrix.gemfile }}
-        bundle install
-        bundle update
+        bundler: 2.2.15
+        bundler-cache: true
     - name: Run RSpec
       run: |
         bundle exec rspec
