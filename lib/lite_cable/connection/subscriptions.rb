@@ -92,17 +92,17 @@ module LiteCable
 
       def transmit_subscription_confirmation(identifier)
         connection.transmit identifier: identifier,
-                            type: LiteCable::INTERNAL[:message_types][:confirmation]
+          type: LiteCable::INTERNAL[:message_types][:confirmation]
       end
 
       def transmit_subscription_rejection(identifier)
         connection.transmit identifier: identifier,
-                            type: LiteCable::INTERNAL[:message_types][:rejection]
+          type: LiteCable::INTERNAL[:message_types][:rejection]
       end
 
       def transmit_subscription_cancel(identifier)
         connection.transmit identifier: identifier,
-                            type: LiteCable::INTERNAL[:message_types][:cancel]
+          type: LiteCable::INTERNAL[:message_types][:cancel]
       end
 
       def log_fmt(msg)

@@ -1,5 +1,5 @@
 require:
-  - standard/cop/semantic_blocks
+  - standard/cop/block_single_line_braces
   - rubocop-md
 
 inherit_gem:
@@ -14,8 +14,9 @@ AllCops:
     - 'gemfiles/**/*'
   DisplayCopNames: true
   TargetRubyVersion: 2.5
+  SuggestExtensions: false
 
-Standard/SemanticBlocks:
+Standard/BlockSingleLineBraces:
   Enabled: false
 
 Style/FrozenStringLiteralComment:
