@@ -9,7 +9,7 @@ module LiteCable # :nodoc:
       end
 
       def call(socket, **options)
-        new(socket, options)
+        new(socket, **options)
       end
 
       module InstanceMethods # :nodoc:
