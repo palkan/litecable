@@ -72,7 +72,7 @@ describe TestBaseConnection do
 
   describe "#handle_command" do
     it "runs subscriptions #execute_command" do
-      expect(subject.subscriptions).to receive(:execute_command).with("command" => "test")
+      expect(subject.subscriptions).to receive(:execute_command).with({ "command" => "test" })
       subject.handle_command('{"command":"test"}')
     end
   end
