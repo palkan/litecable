@@ -56,7 +56,7 @@ describe "Lite Cable server", :async do
     @server = ::Puma::Server.new(
       LiteCable::Server::Middleware.new(nil, connection_class: ServerTest::Connection),
       nil,
-      { min_threads: 1, max_threads: 4 }
+      {min_threads: 1, max_threads: 4}
     )
     @server.add_tcp_listener "127.0.0.1", 3099
 

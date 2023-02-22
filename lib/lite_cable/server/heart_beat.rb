@@ -23,7 +23,6 @@ module LiteCable
         @stopped = true
       end
 
-      # rubocop: disable Metrics/MethodLength
       def run
         Thread.new do
           Thread.current.abort_on_exception = true
@@ -41,7 +40,6 @@ module LiteCable
           end
         end
       end
-      # rubocop: enable Metrics/MethodLength
 
       private
 

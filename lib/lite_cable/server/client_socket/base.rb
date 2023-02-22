@@ -64,7 +64,6 @@ module LiteCable
           @error_handlers << block
         end
 
-        # rubocop: disable Metrics/MethodLength
         def listen
           keepalive
           Thread.new do
@@ -74,7 +73,7 @@ module LiteCable
               each_frame do |data|
                 @message_handlers.each do |h|
                   h.call(data)
-                rescue => e # rubocop: disable Style/RescueStandardError
+                rescue => e
                   log(:error, "Socket receive failed: #{e}")
                   @error_handlers.each { |eh| eh.call(e, data) }
                   close if close_on_error
@@ -85,7 +84,6 @@ module LiteCable
             end
           end
         end
-        # rubocop: enable Metrics/MethodLength
 
         def close
           return unless @active
@@ -116,7 +114,7 @@ module LiteCable
           frame = WebSocket::Frame::Outgoing::Server.new(version: version, type: :close, code: 1000)
           @socket.write(frame.to_s) if frame.supported?
           @socket.close
-        rescue IOError, Errno::EPIPE, Errno::ETIMEDOUT # rubocop:disable Lint/HandleExceptions
+        rescue IOError, Errno::EPIPE, Errno::ETIMEDOUT
           # already closed
         end
 
