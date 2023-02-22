@@ -135,7 +135,7 @@ module LiteCable
         def each_frame
           framebuffer = WebSocket::Frame::Incoming::Server.new(version: version)
 
-          while IO.select([socket])
+          while socket.wait_readable
             data = socket.respond_to?(:recv) ? socket.recv(2000) : socket.readpartial(2000)
             break if data.empty?
 
