@@ -23,7 +23,6 @@ module LiteCable # :nodoc:
           @request ||= Rack::Request.new(socket.env)
         end
 
-        # rubocop: disable Metrics/MethodLength
         def handle_channel_command(identifier, command, data)
           channel = subscriptions.add(identifier, false)
           case command
@@ -45,7 +44,6 @@ module LiteCable # :nodoc:
           close
           false
         end
-        # rubocop: enable Metrics/MethodLength
       end
     end
   end

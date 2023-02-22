@@ -6,7 +6,6 @@ module LiteCable
   module BroadcastAdapters # :nodoc:
     module_function
 
-    # rubocop: disable Metrics/AbcSize, Metrics/MethodLength
     def lookup_adapter(args)
       adapter, options = Array(args)
       path_to_adapter = "lite_cable/broadcast_adapters/#{adapter}"
@@ -30,6 +29,5 @@ module LiteCable
 
       BroadcastAdapters.const_get(adapter_class_name, false).new(**(options || {}))
     end
-    # rubocop: enable Metrics/AbcSize, Metrics/MethodLength
   end
 end
