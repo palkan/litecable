@@ -9,7 +9,7 @@ class App < Sinatra::Application # :nodoc:
   set :public_folder, "assets"
 
   enable :sessions
-  set :session_secret, "my_secrets"
+  set :session_secret, "secret_key_with_size_of_32_bytes_dff054b19c2de43fc406f251376ad40"
 
   get "/" do
     if session[:user]
