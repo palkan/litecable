@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 0.8.0 (2023-03-08)
+
 - Allow using custom channel lookup logic. ([@palkan][])
 
 - Ruby 2.7+ is required.
