@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.files = Dir.glob("lib/**/*") + %w[README.md LICENSE.txt CHANGELOG.md]
   spec.require_paths = ["lib"]
 
-  spec.required_ruby_version = ">= 2.5.0"
+  spec.required_ruby_version = ">= 2.7.0"
 
   spec.add_dependency "anyway_config", ">= 1.0"
 
@@ -31,7 +31,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "websocket", "~> 1.2.4"
   spec.add_development_dependency "websocket-client-simple", "~> 0.3.0"
   spec.add_development_dependency "concurrent-ruby", "~> 1.1"
-  spec.add_development_dependency "puma", ">= 3.6"
+  spec.add_development_dependency "puma", ">= 6.0"
 
   spec.add_development_dependency "bundler", ">= 1.13"
   spec.add_development_dependency "rake", ">= 10.0"

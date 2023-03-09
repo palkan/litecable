@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+- Ruby 2.7+ is required.
+
 ## 0.7.2 (2021-07-06)
 
 - Fixed Ruby 3.0.1 compatibility.

@@ -1,9 +1,11 @@
 require:
   - standard/cop/block_single_line_braces
-  - rubocop-md
 
 inherit_gem:
   standard: config/base.yml
+
+inherit_from:
+  - .rubocop/rubocop_rspec.yml
 
 AllCops:
   Exclude:
@@ -12,9 +14,11 @@ AllCops:
     - 'Gemfile'
     - 'vendor/**/*'
     - 'gemfiles/**/*'
+    - 'benchmarks/**/*'
   DisplayCopNames: true
-  TargetRubyVersion: 2.5
   SuggestExtensions: false
+  NewCops: disable
+  TargetRubyVersion: 2.7
 
 Standard/BlockSingleLineBraces:
   Enabled: false
@@ -22,8 +26,3 @@ Standard/BlockSingleLineBraces:
 Style/FrozenStringLiteralComment:
   Enabled: true
 
-Style/TrailingCommaInArrayLiteral:
-  EnforcedStyleForMultiline: no_comma
-
-Style/TrailingCommaInHashLiteral:
-  EnforcedStyleForMultiline: no_comma

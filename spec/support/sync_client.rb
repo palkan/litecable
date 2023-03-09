@@ -74,7 +74,7 @@ class SyncClient
   def read_messages(expected_size = 0)
     list = []
     loop do
-      break unless @has_messages.try_acquire(1, list.size < expected_size ? WAIT_WHEN_EXPECTING_EVENT : WAIT_WHEN_NOT_EXPECTING_EVENT)
+      break unless @has_messages.try_acquire(1, (list.size < expected_size) ? WAIT_WHEN_EXPECTING_EVENT : WAIT_WHEN_NOT_EXPECTING_EVENT)
 
       msg = @messages.pop(true)
       raise msg if msg.is_a?(Exception)
