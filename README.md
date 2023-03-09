@@ -55,6 +55,21 @@ end
 App.cable.subscriptions.create('chat', ...)
 ```
 
+### Using a custom channel registry
+
+Alternatively to eager loading all channel classes and providing identifiers, you can build a custom _channel registry_ object, which can perform channel class lookups:
+
+```ruby
+# DummyRegistry which always returns a predefined channel class
+class DummyRegistry
+  def lookup(channel_id)
+    DummyChannel
+  end
+end
+
+LiteCable.channel_registry = DummyRegistry.new
+```
+
 ### Using built-in server (middleware)
 
 Lite Cable comes with a simple Rack middleware for development/testing usage.
@@ -78,9 +93,11 @@ end
 
 ### Using with AnyCable
 
-Lite Cable is AnyCable-compatible out-of-the-box:
+Lite Cable is AnyCable-compatible out-of-the-box.
 
-- Set broadcast adapter to AnyCable:
+If AnyCable gem is loaded, you don't need to configure Lite Cable at all.
+
+Otherwise, you must configure broadcast adapter manually:
 
 ```ruby
 LiteCable.broadcast_adapter = :any_cable
@@ -88,7 +105,7 @@ LiteCable.broadcast_adapter = :any_cable
 
 You can also do this via configuration, e.g., env var (`LITECABLE_BROADCAST_ADAPTER=any_cable`) or `broadcast_adapter: any_cable` in a YAML config.
 
-- Configure connection factory:
+**At the AnyCable side**, you must configure a connection factory:
 
 ```ruby
 AnyCable.connection_factory = MyApp::Connection

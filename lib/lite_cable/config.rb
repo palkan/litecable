@@ -13,7 +13,7 @@ module LiteCable
 
     attr_config :logger,
       coder: Coders::JSON,
-      broadcast_adapter: :memory,
+      broadcast_adapter: defined?(::AnyCable::VERSION) ? :any_cable : :memory,
       identifier_coder: Coders::Raw,
       log_level: Logger::INFO
   end

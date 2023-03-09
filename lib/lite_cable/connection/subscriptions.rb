@@ -1,6 +1,15 @@
 # frozen_string_literal: true
 
 module LiteCable
+  class UnknownChannelError < StandardError
+    attr_reader :channel_id
+
+    def initialize(channel_id)
+      @channel_id = channel_id
+      super("Unknown channel: #{channel_id}")
+    end
+  end
+
   module Connection
     # Manage the connection channels and route messages
     class Subscriptions
@@ -30,7 +39,9 @@ module LiteCable
 
         channel_id = params.delete("channel")
 
-        channel_class = Channel::Registry.find!(channel_id)
+        channel_class = LiteCable.channel_registry.lookup(channel_id)
+
+        raise UnknownChannelError, channel_id unless channel_class
 
         subscriptions[identifier] = channel_class.new(connection, identifier, params)
         subscribe ? subscribe_channel(subscriptions[identifier]) : subscriptions[identifier]

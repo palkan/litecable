@@ -21,6 +21,8 @@ module LiteCable
           channels[id]
         end
 
+        alias_method :lookup, :find
+
         def find!(id)
           channel_class = find(id)
           raise UnknownChannelError unless channel_class

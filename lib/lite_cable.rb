@@ -23,6 +23,8 @@ module LiteCable
       @config ||= Config.new
     end
 
+    attr_accessor :channel_registry
+
     # Broadcast encoded message to the stream
     def broadcast(stream, message, coder: LiteCable.config.coder)
       broadcast_adapter.broadcast(stream, message, coder: coder)
@@ -47,4 +49,6 @@ module LiteCable
       @broadcast_adapter = adapter
     end
   end
+
+  self.channel_registry = Channel::Registry
 end
