@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+## 0.8.1 (2023-08-22)
+
+- Handle closing socket already closed by server. ([@palkan][])
+
 ## 0.8.0 (2023-03-08)
 
 - Allow using custom channel lookup logic. ([@palkan][])
