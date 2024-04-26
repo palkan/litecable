@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+## 0.8.2 (2024-04-26)
+
+- Fix handling reads on closed connections. ([@palkan][])
+
 ## 0.8.1 (2023-08-22)
 
 - Handle closing socket already closed by server. ([@palkan][])
