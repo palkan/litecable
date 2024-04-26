@@ -39,7 +39,7 @@ module LiteCable
 
       def initialize(socket, identifiers: nil, **hargs)
         @encoded_ids = identifiers ? JSON.parse(identifiers) : {}
-        super socket, **hargs
+        super(socket, **hargs)
       end
 
       def identifiers
