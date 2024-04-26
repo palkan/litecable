@@ -137,7 +137,7 @@ module LiteCable
 
           while socket.wait_readable
             data = socket.respond_to?(:recv) ? socket.recv(2000) : socket.readpartial(2000)
-            break if data.empty?
+            break if data.nil? || data.empty?
 
             framebuffer << data
             while frame = framebuffer.next # rubocop:disable Lint/AssignmentInCondition
